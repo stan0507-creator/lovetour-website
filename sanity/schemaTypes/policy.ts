@@ -15,6 +15,7 @@ const policyCategoryTitles: Record<string, string> = {
   "villa-facility": "包棟設備",
   "travel-service": "租車與行程",
   "lost-and-found": "遺失物",
+  weather: "天候與交通異常",
 };
 
 export const policy = defineType({
@@ -49,6 +50,7 @@ export const policy = defineType({
           { title: "包棟設備", value: "villa-facility" },
           { title: "租車與行程", value: "travel-service" },
           { title: "遺失物", value: "lost-and-found" },
+          { title: "天候與交通異常", value: "weather" },
         ],
       },
     }),

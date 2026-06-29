@@ -123,7 +123,7 @@
 | Collection | Local source file | Local field | Local type | Sanity document type | Sanity field | Sanity type | Query support | Mapper support | Required / optional | Default / fallback | Transformation | Validation | Migration status | Notes |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
 | Policy | `src/content/data/policies.ts` | `id` | `ContentId` | `policy` | `_id` | document ID | No | No | Required by migration | stable ID | direct stable ID | migration check | Schema-only | No CMS policy query yet. |
-| Policy | `src/content/data/policies.ts` | `type` | `string` | `policy` | `category` | `string` | No | No | Sanity required when published | none | type to category | required | Needs mapper/query | Category naming requires confirmation. |
+| Policy | `src/content/data/policies.ts` | `type` | `string` | `policy` | `category` | `string` | No | No | Sanity required when published | none | type to category | required | Ready for payload | Phase 12C adds `weather` category for天候與交通異常. |
 | Policy | `src/content/data/policies.ts` | `title` | `string` | `policy` | `title` | `string` | No | No | Sanity required when published | none | direct | required | Needs mapper/query | |
 | Policy | `src/content/data/policies.ts` | `content` | `string` | `policy` | `body` | `text` | No | No | Sanity required when published | none | content to body | required | Needs mapper/query | |
 | Policy | `src/content/data/policies.ts` | `priority` | `number \| undefined` | `policy` | `displayOrder` | `number` | No | No | Optional | 10 | priority to displayOrder | integer | Needs mapper/query | |
@@ -141,4 +141,5 @@
 - Local 有些欄位目前 Sanity 沒有對應，例如 Property `featured`、Room `featureHighlights`、Room `isBookableAsPrivateStay`。
 - Sanity 有些欄位目前 local 沒有對應，例如圖片 alt、SEO、Google Maps URL、社群連結。
 - 目前 mapper 多數會把 CMS 內容轉成 `contentStatus: "verified"`、`published: false`，尚未完整保留 Sanity 狀態。
-- Phase 12B dry-run 顯示 `policy-weather` 的 local type `weather` 尚未有明確 Sanity Policy category mapping。
+- Phase 12C 已將 `policy-weather` 對應到新增的 Sanity Policy category `weather`，但 Policy adapter 尚未接入前台。
+- Phase 12C payload 會省略 sample image asset 欄位，不產生虛構 `_ref`。

@@ -32,7 +32,8 @@ assert.deepEqual(room1201?.unresolvedReferences, [], "room 1201 reference must r
 assert.ok(room1201?.warnings.some((warning) => warning.includes("sample/prototype media")), "sample image warning expected");
 
 const weatherPolicy = report.documents.find((document) => document.sourceId === "policy-weather");
-assert.ok(weatherPolicy?.blockingErrors.some((error) => error.includes("No Policy category mapping")), "unmapped policy type must block");
+assert.equal(weatherPolicy?.readiness, "ready-with-warnings", "weather policy should map to an explicit schema category");
+assert.equal(weatherPolicy?.payloadPreview.category, "weather", "weather policy category must be explicit");
 
 const source = readFileSync(new URL("./dry-run-local-content.ts", import.meta.url), "utf8");
 for (const forbidden of [".create(", ".createIfNotExists(", ".createOrReplace(", ".patch(", ".delete(", ".transaction(", ".mutate(", ".publish("]) {
@@ -45,4 +46,3 @@ assert.equal(bookingUrlPriority(undefined, "https://legacy.example/room"), "http
 assert.notEqual("https://booking.example/room", "https://legacy.example/room", "different booking fields should be detectable");
 
 console.log("Migration dry-run tests passed.");
-

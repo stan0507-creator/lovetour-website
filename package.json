@@ -13,6 +13,8 @@
     "sanity:build": "cd sanity && sanity build dist --yes",
     "migration:dry-run": "cd sanity && sanity exec migrations/dry-run-local-content.ts",
     "migration:test": "cd sanity && sanity exec migrations/dry-run-local-content.test.ts",
+    "migration:payload": "cd sanity && sanity exec migrations/generate-draft-payload.ts",
+    "migration:payload:test": "cd sanity && sanity exec migrations/generate-draft-payload.test.ts",
     "phase": "echo \"Phase 6 real content audit and business flow preparation only. No CMS, API, AI, Odingding integration, booking, payment, member, or backend features.\""
   },
   "devDependencies": {

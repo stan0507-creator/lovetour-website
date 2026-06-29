@@ -26,6 +26,7 @@ const POLICY_CATEGORY_MAP: Record<string, string> = {
   smoking: "house-rule",
   "private-stay": "villa-facility",
   payment: "payment",
+  weather: "weather",
 };
 const POLICY_CATEGORIES = new Set([
   "check-in-out",
@@ -39,6 +40,7 @@ const POLICY_CATEGORIES = new Set([
   "villa-facility",
   "travel-service",
   "lost-and-found",
+  "weather",
 ]);
 
 export type Readiness = "ready" | "ready-with-warnings" | "blocked";
@@ -572,8 +574,8 @@ export const createDryRunReport = (generatedAt = new Date().toISOString()): DryR
   };
 };
 
-const writeReport = (report: DryRunReport) => {
-  const reportPath = resolve(process.cwd(), REPORT_PATH);
+export const writeJsonReport = (report: unknown, relativeReportPath: string) => {
+  const reportPath = resolve(process.cwd(), relativeReportPath);
   mkdirSync(dirname(reportPath), { recursive: true });
   writeFileSync(reportPath, `${JSON.stringify(report, null, 2)}\n`, "utf8");
   return reportPath;
@@ -599,7 +601,7 @@ const printSummary = (report: DryRunReport, reportPath: string) => {
 
 const runCli = () => {
   const report = createDryRunReport();
-  const reportPath = writeReport(report);
+  const reportPath = writeJsonReport(report, REPORT_PATH);
   printSummary(report, reportPath);
   process.exitCode = report.blockingErrors.length > 0 ? 1 : 0;
 };

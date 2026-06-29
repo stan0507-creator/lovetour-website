@@ -257,7 +257,7 @@ Phase 12B 採用以下策略：
 
 ## 19. Phase 12B Known Blockers
 
-目前 dry-run 真實回報的阻擋項：
+Phase 12B dry-run 曾真實回報以下阻擋項：
 
 - `policy-weather` 的 local type `weather` 尚未有明確 Sanity Policy category mapping。
 
@@ -266,3 +266,39 @@ Phase 12B 採用以下策略：
 - Room 仍使用 sample/prototype photo IDs，正式照片需後續由業主確認後再建立 Sanity image assets。
 - Room `maximumGuests` 目前等於建議入住人數，正式發布前仍需確認是否應公開。
 - Policy adapter 尚未接入前台資料流。
+
+## 20. Phase 12C Draft Payload Design
+
+Phase 12C 新增本機 payload 產生工具：
+
+```bash
+pnpm run migration:payload
+```
+
+輸出：
+
+- `.migration-reports/phase-12c-draft-payload.json`
+- `.migration-reports/phase-12c-payload-review.json`
+
+規則：
+
+- 只產生本機 JSON，不連線 Sanity。
+- 不建立 Sanity client，不使用 write token。
+- 不建立 import runner。
+- 不呼叫 create、patch、delete、transaction、publish 或 dataset import。
+- 只有 `ready` 與 `ready-with-warnings` documents 會進入 payload。
+- `blocked` documents 只會出現在 review report。
+- payload document `_id` 必須是 `drafts.<stable-base-id>`。
+- payload 不包含 `_rev`、`_createdAt`、`_updatedAt`。
+- Room reference 使用 base ID，不使用 `drafts.` 前綴。
+- sample / Unsplash / 示意圖片全部省略，review report 標記 requires-real-asset。
+
+## 21. Policy Weather Category Decision
+
+Phase 12C 重新檢查 local `policy-weather` 內容：
+
+> 如遇颱風、停航或停飛等不可抗力因素，請與民宿聯絡，將依實際交通及公告情況協助處理。
+
+這不是單純取消規則，而是天候、船班、航班與不可抗力的長期營運政策。因此已在 Sanity Policy schema 新增 `weather` category，中文名稱為「天候與交通異常」。
+
+這個決策避免把天候政策硬塞到 `cancellation`，也讓未來後台可以獨立管理。
