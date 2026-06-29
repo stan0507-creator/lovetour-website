@@ -70,9 +70,9 @@
 | Room | `src/content/data/rooms.ts` | `featureHighlights` | `string[] \| undefined` | none | none | none | No | No | Optional | empty | none | none | Gap | Potential content loss if not added or intentionally skipped. |
 | Room | `src/content/data/rooms.ts` | `notes` | `string[] \| undefined` | `room` | `notes` | `array<string>` | Yes | Yes | Optional | `[]` | direct | forbidden terms warning/error | Ready | |
 | Room | `src/content/data/rooms.ts` | `isBookableAsPrivateStay` | `boolean \| undefined` | none | none | none | No | No | Optional | false | none | none | Gap | Villa rental is not in first batch Room schema. |
-| Room | `src/content/data/rooms.ts` | `bookingUrl` | `string \| undefined` | `room` | `odingUrl` | `url` | Yes | Yes | Optional | empty | maps `odingUrl` to local `bookingUrl` | URL safety validation | Ambiguous | See odingUrl audit below. |
-| Room | `src/content/data/rooms.ts` | `bookingUrl` | `string \| undefined` | `room` | `bookingUrl` | `url` | No | No | Optional | empty | none | URL safety validation | Schema-only | Duplicate purpose with `odingUrl`. Needs decision. |
-| Room | `src/content/data/rooms.ts` | `lineInquiryUrl` | `string \| undefined` | `room` | `lineInquiryUrl` | `url` | No | No | Optional | empty | none | URL safety validation | Schema-only | Not yet queried or mapped. |
+| Room | `src/content/data/rooms.ts` | `bookingUrl` | `string \| undefined` | `room` | `bookingUrl` | `url` | Yes | Yes | Optional | empty | canonical field; query falls back to legacy `odingUrl` | URL safety validation | Ready with legacy fallback | Phase 12B canonical decision: future migration writes `bookingUrl` only. |
+| Room | legacy CMS only | none | none | `room` | `odingUrl` | `url` | Yes | Yes | Optional | fallback only | legacy `odingUrl` -> local `bookingUrl` if `bookingUrl` is empty | URL safety validation | Legacy compatibility | Kept for PoC compatibility; do not write new values in migration. |
+| Room | `src/content/data/rooms.ts` | `lineInquiryUrl` | `string \| undefined` | `room` | `lineInquiryUrl` | `url` | Yes | Yes | Optional | empty | direct | URL safety validation | Ready | Local data currently has no values. |
 | Room | `src/content/data/rooms.ts` | `displayOrder` | `number \| undefined` | `room` | `displayOrder` | `number` | Yes | Yes | Sanity required | 10 | direct | required integer | Ready | |
 | Room | `src/content/data/rooms.ts` | `featured` | `boolean \| undefined` | `room` | `featured` | `boolean` | Yes | Yes | Optional | false | direct | none | Ready | |
 | Room | `src/content/data/rooms.ts` | `contentStatus` | `ContentStatus` | `room` | `contentStatus` | `string` | Yes | Partial | Optional | mapper forces verified | status translation | shared status options | Needs review | Mapper does not preserve exact status. |
@@ -87,24 +87,24 @@
 | Local type | `src/domain/models.ts` | `bookingUrl` |
 | Sanity schema | `sanity/schemaTypes/room.ts` | `odingUrl` |
 | Sanity shared schema field | `sanity/schemaTypes/fields/linkFields.ts` | `bookingUrl` |
-| Query | `src/content/cms/queries.ts` | `odingUrl` |
-| Mapper | `src/content/cms/mapper.ts` | `room.odingUrl` -> `bookingUrl` |
-| CMS TypeScript type | `src/content/cms/types.ts` | `odingUrl` |
+| Query | `src/content/cms/queries.ts` | `bookingUrl` via `coalesce(bookingUrl, odingUrl)`, plus legacy `odingUrl` |
+| Mapper | `src/content/cms/mapper.ts` | `room.bookingUrl ?? room.odingUrl` -> `bookingUrl` |
+| CMS TypeScript type | `src/content/cms/types.ts` | `bookingUrl`, legacy `odingUrl` |
 
 結論：
 
-- schema 內同時存在 `odingUrl` 與 `bookingUrl`。
-- query 目前只取 `odingUrl`。
-- mapper 目前把 `odingUrl` 當作前台 domain model 的 `bookingUrl`。
-- local domain model 沒有 `odingUrl`。
-- 這會造成後續正式 migration 欄位語意不清。
+- schema 內仍同時存在 `odingUrl` 與 `bookingUrl`。
+- Phase 12B 已決定 `bookingUrl` 為 canonical 欄位。
+- query 目前優先取 `bookingUrl`，缺少時 fallback 到 `odingUrl`。
+- mapper 目前把 `bookingUrl ?? odingUrl` 輸出成前台 domain model 的 `bookingUrl`。
+- local domain model 沒有 `odingUrl`，後續正式 migration 不應寫入新的 `odingUrl`。
 
 建議：
 
-- Phase 12A 先記錄，不修改程式碼。
-- Phase 12B 或 Phase 12C 應決定 canonical 欄位。
-- 若選 `bookingUrl` 為 canonical，需保留 `odingUrl` 相容讀取一段時間，避免破壞 PoC 草稿。
-- 若選 `odingUrl` 為奧丁丁專用欄位，需在 schema、query、mapper、文件中明確命名用途。
+- Phase 12B 已完成最小相容讀取修改。
+- Phase 12C 若設計實際 import payload，僅能寫入 `bookingUrl`。
+- `odingUrl` 在 PoC 相容期內不可刪除，以免舊草稿無法讀取。
+- 未來若要移除 `odingUrl`，需先完成 PoC 文件檢查與資料欄位遷移確認。
 
 ## FAQ
 
@@ -141,4 +141,4 @@
 - Local 有些欄位目前 Sanity 沒有對應，例如 Property `featured`、Room `featureHighlights`、Room `isBookableAsPrivateStay`。
 - Sanity 有些欄位目前 local 沒有對應，例如圖片 alt、SEO、Google Maps URL、社群連結。
 - 目前 mapper 多數會把 CMS 內容轉成 `contentStatus: "verified"`、`published: false`，尚未完整保留 Sanity 狀態。
-
+- Phase 12B dry-run 顯示 `policy-weather` 的 local type `weather` 尚未有明確 Sanity Policy category mapping。

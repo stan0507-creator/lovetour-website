@@ -58,7 +58,9 @@ export interface SanityRoom {
   coverImage?: SanityImageRef;
   gallery?: SanityImageRef[];
   displayOrder?: number;
+  bookingUrl?: string;
   odingUrl?: string;
+  lineInquiryUrl?: string;
   featured?: boolean;
   contentStatus: CmsContentStatus;
 }
@@ -72,4 +74,3 @@ export interface SanityFAQ {
   displayOrder?: number;
   contentStatus: CmsContentStatus;
 }
-

@@ -216,3 +216,53 @@ production dataset 是目前 Sanity PoC 使用的 dataset，因此任何寫入�
 - 不把 `.env` 或 `sanity/.env` 加入 Git。
 - 所有寫入前需先完成 dry-run。
 
+## 17. Phase 12B Dry-run Tool
+
+Phase 12B 已新增唯讀 dry-run 工具：
+
+```bash
+pnpm run migration:dry-run
+```
+
+工具位置：
+
+- `sanity/migrations/dry-run-local-content.ts`
+- `sanity/migrations/dry-run-local-content.test.ts`
+- `sanity/migrations/README.md`
+
+Report 位置：
+
+- `.migration-reports/phase-12b-dry-run.json`
+
+`.migration-reports/` 已加入 `.gitignore`，不得 commit 完整 report，避免未來營運資料或個資被寫入 Git。
+
+Dry-run 安全原則：
+
+- 完全不建立 Sanity client。
+- 不使用 write token。
+- 不呼叫 Sanity create、patch、delete、transaction、publish 或 dataset import。
+- 只讀取 repo 內 local TypeScript content data。
+- 若存在 blocking errors，exit code 為 1，但仍會先產生 report。
+
+## 18. Room Booking URL Canonical Strategy
+
+Phase 12B 採用以下策略：
+
+- `bookingUrl` 作為未來 canonical 欄位。
+- `odingUrl` 暫時保留為 legacy PoC 相容欄位，不刪除。
+- GROQ query 使用 `coalesce(bookingUrl, odingUrl)`，優先讀取 `bookingUrl`，缺少時 fallback 到 `odingUrl`。
+- mapper 最終只輸出 local domain model 的 `bookingUrl`。
+- 未來正式 migration payload 只寫入 `bookingUrl`，不新增新的 `odingUrl` 值。
+- 現有 PoC document 不 patch、不遷移、不修改。
+
+## 19. Phase 12B Known Blockers
+
+目前 dry-run 真實回報的阻擋項：
+
+- `policy-weather` 的 local type `weather` 尚未有明確 Sanity Policy category mapping。
+
+目前 warnings 主要來自：
+
+- Room 仍使用 sample/prototype photo IDs，正式照片需後續由業主確認後再建立 Sanity image assets。
+- Room `maximumGuests` 目前等於建議入住人數，正式發布前仍需確認是否應公開。
+- Policy adapter 尚未接入前台資料流。

@@ -146,7 +146,8 @@ export const room = defineType({
       title: "奧丁丁網址",
       type: "url",
       group: "links",
-      description: "PoC 可留空；未確認前不可啟用正式訂房 CTA。",
+      description:
+        "Legacy PoC 欄位，暫時保留供舊資料讀取；新資料請改填下方「訂房連結 bookingUrl」。未確認前不可啟用正式訂房 CTA。",
       validation: urlSafetyValidation,
     }),
     bookingUrlField,

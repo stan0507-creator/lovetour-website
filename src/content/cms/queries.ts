@@ -73,7 +73,9 @@ export const roomsQuery = (mode: "draft" | "published"): string => `
       asset->{_ref, url}
     },
     displayOrder,
+    "bookingUrl": coalesce(bookingUrl, odingUrl),
     odingUrl,
+    lineInquiryUrl,
     featured,
     contentStatus
   }
@@ -90,4 +92,3 @@ export const faqsQuery = (mode: "draft" | "published"): string => `
     contentStatus
   }
 `;
-

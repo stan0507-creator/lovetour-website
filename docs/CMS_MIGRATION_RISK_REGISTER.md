@@ -22,4 +22,5 @@
 | R-016 | Token 或環境設定進入 Git | Repo security | Medium | High | `.gitignore` 排除 `.env`、`.env.*`、`sanity/.env`；commit 前 secret scan | `git diff --cached --name-only` 與 keyword scan | 立即停止，移除追蹤並 rotate token | Developer + Owner confirm no secrets | Open |
 | R-017 | `odingUrl` / `bookingUrl` 欄位混用 | Room booking links | High | Medium | Phase 12B/12C 決定 canonical 欄位；保留 PoC 相容 | field mapping audit；query/mapper review | 不匯入訂房 URL，直到欄位決策完成 | Owner confirms naming and Odingding flow | Open |
 | R-018 | Policy 涉及費用與取消規則但內容未確認 | Policy | High | High | 未確認政策不得匯入 published；敏感政策保留 draft | Studio warning/error；content review | 刪除或下架 draft policy | Owner confirms actual rules | Open |
-
+| R-019 | Dry-run report 被誤 commit，造成未來營運資料或個資進入 Git | Migration reports | Medium | Medium | `.migration-reports/` 加入 `.gitignore`；commit 前檢查 staged files | `git diff --cached --name-only` | 從 Git 移除並視內容決定是否 rotate sensitive values | Developer confirms staged files | Open |
+| R-020 | Policy local type 無法對應 Sanity category | Policy | High | Medium | dry-run 建立明確 type-to-category mapping，無 mapping 時 blocked | `pnpm run migration:dry-run` blocking errors | 不匯入該 Policy，等待分類決策 | Owner confirms category mapping | Open |
