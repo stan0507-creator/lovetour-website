@@ -1,0 +1,217 @@
+<!doctype html>
+<!-- Phase 0 visual prototype. Formal implementation starts from the documented Phase 1 architecture. -->
+<html lang="zh-Hant">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>樂圖漫遊會館｜澎湖民宿與包棟住宿</title>
+    <meta name="description" content="樂圖漫遊會館位於澎湖，提供舒適房型、包棟住宿、花火節旅遊諮詢與澎湖在地行程建議。">
+    <link rel="preconnect" href="https://images.unsplash.com">
+    <link rel="stylesheet" href="styles.css">
+  </head>
+  <body>
+    <header class="site-header" data-header>
+      <a class="brand" href="#top" aria-label="回到首頁">
+        <span class="brand-mark">LT</span>
+        <span>
+          <strong>樂圖漫遊會館</strong>
+          <small>Penghu Stay</small>
+        </span>
+      </a>
+
+      <button class="nav-toggle" type="button" aria-label="開啟選單" aria-expanded="false" data-nav-toggle>
+        <span></span>
+        <span></span>
+      </button>
+
+      <nav class="main-nav" data-nav>
+        <a href="#rooms">房型</a>
+        <a href="#experience">服務</a>
+        <a href="#location">位置</a>
+        <a href="#faq">常見問題</a>
+        <a class="nav-cta" href="#booking">立即詢問</a>
+      </nav>
+    </header>
+
+    <main id="top">
+      <section class="hero" aria-label="樂圖漫遊會館首頁">
+        <picture>
+          <source srcset="https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=1800&q=85" media="(min-width: 900px)">
+          <img src="https://images.unsplash.com/photo-1500375592092-40eb2168fd21?auto=format&fit=crop&w=1100&q=85" alt="澎湖海岸與清澈海水">
+        </picture>
+        <div class="hero-overlay"></div>
+        <div class="hero-content">
+          <p class="eyebrow">澎湖民宿｜好友旅行｜家庭包棟</p>
+          <h1>樂圖漫遊會館</h1>
+          <p class="hero-copy">把白天留給海，把晚上留給好好休息。舒適房型、親切接待與在地旅遊建議，讓你的澎湖行程少一點奔波，多一點自在。</p>
+          <div class="hero-actions">
+            <a class="button primary" href="#booking">詢問空房</a>
+            <a class="button secondary" href="#rooms">查看房型</a>
+          </div>
+        </div>
+        <div class="quick-facts" aria-label="住宿特色">
+          <div>
+            <strong>2-8人</strong>
+            <span>彈性房型</span>
+          </div>
+          <div>
+            <strong>包棟</strong>
+            <span>親友同住</span>
+          </div>
+          <div>
+            <strong>澎湖</strong>
+            <span>在地行程</span>
+          </div>
+        </div>
+      </section>
+
+      <section id="booking" class="booking-band" aria-label="快速詢問">
+        <div>
+          <p class="section-kicker">快速詢問</p>
+          <h2>先告訴我們日期與人數，幫你確認適合房型。</h2>
+        </div>
+        <form class="booking-form">
+          <label>
+            入住日期
+            <input type="date" name="checkin">
+          </label>
+          <label>
+            退房日期
+            <input type="date" name="checkout">
+          </label>
+          <label>
+            人數
+            <select name="guests">
+              <option>2人</option>
+              <option>3-4人</option>
+              <option>5-8人</option>
+              <option>包棟詢問</option>
+            </select>
+          </label>
+          <button class="button primary" type="submit">產生詢問訊息</button>
+        </form>
+      </section>
+
+      <section class="intro">
+        <div class="intro-copy">
+          <p class="section-kicker">Stay Slowly</p>
+          <h2>適合把澎湖玩得剛剛好的住宿節奏</h2>
+          <p>從抵達、放行李、出海、看花火，到晚上回來洗去一身海風，住宿不只是一張床。新版網站把旅客最在意的資訊放前面：房型、包棟、位置、訂房方式與常見問題。</p>
+        </div>
+        <div class="intro-media">
+          <img src="https://images.unsplash.com/photo-1520454974749-611b7248ffdb?auto=format&fit=crop&w=1100&q=85" alt="明亮舒適的住宿空間">
+        </div>
+      </section>
+
+      <section id="rooms" class="section">
+        <div class="section-heading">
+          <p class="section-kicker">Rooms</p>
+          <h2>房型選擇</h2>
+          <p>依照同行人數與旅行目的安排，不管是情侶、家庭、朋友出遊或整棟入住，都能快速找到合適方案。</p>
+        </div>
+        <div class="room-grid">
+          <article class="room-card">
+            <img src="https://images.unsplash.com/photo-1598928636135-d146006ff4be?auto=format&fit=crop&w=900&q=85" alt="雙人房床鋪">
+            <div>
+              <span>Couple</span>
+              <h3>溫馨雙人房</h3>
+              <p>適合雙人旅行、小旅行休息，保留安靜與簡潔的住宿感。</p>
+            </div>
+          </article>
+          <article class="room-card">
+            <img src="https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?auto=format&fit=crop&w=900&q=85" alt="家庭房空間">
+            <div>
+              <span>Family</span>
+              <h3>家庭四人房</h3>
+              <p>親子與好友出遊的實用房型，行李、休息與同行互動都更從容。</p>
+            </div>
+          </article>
+          <article class="room-card">
+            <img src="https://images.unsplash.com/photo-1564013799919-ab600027ffc6?auto=format&fit=crop&w=900&q=85" alt="包棟民宿外觀">
+            <div>
+              <span>Private</span>
+              <h3>包棟住宿</h3>
+              <p>適合多人同遊、家庭聚會與節慶出行，保有更完整的公共使用彈性。</p>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <section id="experience" class="experience">
+        <div class="section-heading">
+          <p class="section-kicker">Experience</p>
+          <h2>把旅程細節一起想好</h2>
+        </div>
+        <div class="experience-grid">
+          <div class="feature">
+            <strong>01</strong>
+            <h3>花火節與旺季住宿</h3>
+            <p>把重要檔期、入住規則與房況詢問集中呈現，旅客不用到處找資訊。</p>
+          </div>
+          <div class="feature">
+            <strong>02</strong>
+            <h3>在地行程建議</h3>
+            <p>可放入跳島、海上活動、租車、親子景點與雨天備案，提升訂房信任感。</p>
+          </div>
+          <div class="feature">
+            <strong>03</strong>
+            <h3>清楚的聯絡入口</h3>
+            <p>Line、電話、表單與社群入口集中在關鍵位置，減少旅客猶豫。</p>
+          </div>
+          <div class="feature">
+            <strong>04</strong>
+            <h3>入住須知</h3>
+            <p>入住時間、停車、加床、取消政策與包棟規則，都能整理成好讀的區塊。</p>
+          </div>
+        </div>
+      </section>
+
+      <section id="location" class="location">
+        <div class="location-copy">
+          <p class="section-kicker">Location</p>
+          <h2>抵達後，把時間留給海風與晚霞</h2>
+          <p>位置區塊可串接 Google Maps、機場/港口交通說明、附近餐飲與景點距離。旅客在訂房前最常問的交通問題，可以在這裡一次回答。</p>
+          <a class="text-link" href="https://www.lovetour880.com/" target="_blank" rel="noreferrer">查看目前線上網站</a>
+        </div>
+        <div class="map-panel" aria-label="位置摘要">
+          <div>
+            <span>澎湖</span>
+            <strong>Penghu Islands</strong>
+          </div>
+          <p>機場、港口、租車、景點距離與停車資訊可放在此處。</p>
+        </div>
+      </section>
+
+      <section id="faq" class="section faq">
+        <div class="section-heading">
+          <p class="section-kicker">FAQ</p>
+          <h2>常見問題</h2>
+        </div>
+        <div class="faq-list">
+          <details>
+            <summary>可以包棟嗎？</summary>
+            <p>可以將包棟人數、可使用空間與旺季規則整理在此，讓多人出遊更容易決定。</p>
+          </details>
+          <details>
+            <summary>如何確認房價與空房？</summary>
+            <p>建議透過 Line 或表單提供入住日期、退房日期、人數與房型偏好，我們再協助確認。</p>
+          </details>
+          <details>
+            <summary>適合花火節入住嗎？</summary>
+            <p>可以新增花火節專區，列出可訂日期、交通建議與活動期間住宿提醒。</p>
+          </details>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <div>
+        <strong>樂圖漫遊會館</strong>
+        <p>澎湖民宿｜房型住宿｜包棟詢問｜在地行程建議</p>
+      </div>
+      <a class="button secondary" href="#booking">開始詢問</a>
+    </footer>
+
+    <script src="script.js"></script>
+  </body>
+</html>

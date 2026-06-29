@@ -1,0 +1,97 @@
+---
+import type { FAQContent, PolicyContent } from "../../content/types";
+
+interface Props {
+  faqs: FAQContent[];
+  policies?: PolicyContent[];
+}
+
+const { faqs, policies = [] } = Astro.props;
+
+const categoryLabels: Record<string, string> = {
+  booking: "入住與退房",
+  "private-stay": "包棟",
+  policy: "住宿規則",
+  location: "交通與接送",
+  "check-in": "入住與退房",
+  "extra-bed": "加床",
+  cancellation: "取消與住宿規則",
+  parking: "停車",
+  payment: "付款",
+  smoking: "吸菸規則",
+  transport: "租車與行程",
+  weather: "天候與交通異常",
+};
+
+const policyFaqs = policies.map((policy) => ({
+  id: `policy-${policy.type}`,
+  category: policy.type,
+  question: policy.title,
+  answer: policy.content,
+  priority: policy.priority,
+}));
+
+const items = [...faqs, ...policyFaqs].sort((left, right) => (left.priority ?? 999) - (right.priority ?? 999));
+const grouped = items.reduce<Record<string, typeof items>>((result, item) => {
+  const category = categoryLabels[item.category ?? ""] ?? item.category ?? "其他";
+  result[category] = result[category] ?? [];
+  result[category].push(item);
+  return result;
+}, {});
+---
+
+<div class="faq-groups">
+  {Object.entries(grouped).map(([category, categoryItems]) => (
+    <section class="faq-group" aria-labelledby={`faq-${category}`}>
+      <h2 id={`faq-${category}`}>{category}</h2>
+      <div class="faq-list">
+        {categoryItems.map((item) => (
+          <details>
+            <summary>{item.question}</summary>
+            <p>{item.answer}</p>
+          </details>
+        ))}
+      </div>
+    </section>
+  ))}
+</div>
+
+<style>
+  .faq-groups {
+    display: grid;
+    gap: var(--space-8);
+  }
+
+  .faq-group {
+    display: grid;
+    gap: var(--space-4);
+  }
+
+  h2 {
+    margin: 0;
+    font-size: var(--font-size-xl);
+  }
+
+  .faq-list {
+    display: grid;
+    gap: var(--space-3);
+  }
+
+  details {
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    background: var(--color-surface);
+  }
+
+  summary {
+    cursor: pointer;
+    padding: var(--space-5);
+    font-weight: var(--font-weight-black);
+  }
+
+  p {
+    margin: 0;
+    padding: 0 var(--space-5) var(--space-5);
+    color: var(--color-text-secondary);
+  }
+</style>

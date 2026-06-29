@@ -1,0 +1,16 @@
+{
+  "name": "lovetour880-sanity-poc",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "sanity dev",
+    "build": "sanity build dist --yes"
+  },
+  "dependencies": {
+    "@sanity/client": "^7.23.0",
+    "react": "^19.2.7",
+    "react-dom": "^19.2.7",
+    "sanity": "^6.2.0",
+    "styled-components": "^6.4.3"
+  }
+}

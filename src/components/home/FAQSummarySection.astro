@@ -1,0 +1,66 @@
+---
+import type { FAQContent } from "../../content/types";
+import SectionHeading from "../ui/SectionHeading.astro";
+
+interface Props {
+  faqs: FAQContent[];
+}
+
+const { faqs } = Astro.props;
+---
+
+<section id="faq" class="section">
+  <div class="container">
+    <SectionHeading
+      eyebrow="FAQ"
+      title="把常見疑問先整理好，讓詢問更輕鬆"
+      copy="以下先放入已確認的入住、接送、加床與包棟基本規則；涉及費用與收款責任的細節尚未顯示。"
+    />
+    <div class="faq-list">
+      {faqs.slice(0, 4).map((faq) => (
+        <article class="faq-card">
+          <p>{faq.category}</p>
+          <h3>{faq.question}</h3>
+          <span>{faq.answer}</span>
+        </article>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .faq-list {
+    display: grid;
+    gap: var(--space-4);
+  }
+
+  .faq-card {
+    padding: var(--space-6);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    background: var(--color-surface);
+  }
+
+  .faq-card p {
+    margin: 0 0 var(--space-2);
+    color: var(--color-primary);
+    font-size: var(--font-size-sm);
+    font-weight: var(--font-weight-black);
+  }
+
+  h3 {
+    margin: 0 0 var(--space-3);
+    font-size: var(--font-size-lg);
+    line-height: var(--line-height-heading);
+  }
+
+  span {
+    color: var(--color-text-secondary);
+  }
+
+  @media (min-width: 768px) {
+    .faq-list {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+</style>

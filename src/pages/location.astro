@@ -1,0 +1,114 @@
+---
+import ContactSummary from "../components/ui/ContactSummary.astro";
+import CTASection from "../components/ui/CTASection.astro";
+import PageHero from "../components/ui/PageHero.astro";
+import { getMediaAssetById, getNearbyPlaces, getSiteProfile } from "../content";
+import MainLayout from "../layouts/MainLayout.astro";
+
+const profile = getSiteProfile();
+const places = getNearbyPlaces();
+const heroImage = getMediaAssetById("media-location-harbor");
+---
+
+<MainLayout title="交通位置｜樂圖漫遊會館" description="樂圖漫遊會館交通位置與聯絡摘要，包含地址、機場港口接送說明與交通需求整理。" canonicalPath="/location" ogImageId="media-location-harbor">
+  <main>
+    <PageHero eyebrow="Location" title="交通位置" copy="樂圖漫遊會館位於澎湖縣馬公市西衛里。機場與港口接送需提前預約，並由民宿確認後安排。" image={heroImage} breadcrumbs={[{ label: "交通位置" }]} />
+
+    <section class="section">
+      <div class="container location-grid">
+        <div>
+          <p class="eyebrow">Map</p>
+          <h2 class="section-title">地圖嵌入區</h2>
+          <p class="section-copy">Google Maps 商家分享連結尚未匯入正式內容層，現階段先保留地圖區塊位置。</p>
+          <div class="map-frame" aria-label="地圖嵌入區">
+            <strong>澎湖縣馬公市西衛里261-9號</strong>
+            <span>正式地圖連結確認後再更新</span>
+          </div>
+        </div>
+        <ContactSummary profile={profile} places={places} />
+      </div>
+    </section>
+
+    <section class="section section-muted">
+      <div class="container place-grid">
+        {places.map((place) => (
+          <article>
+            <p>{place.category}</p>
+            <h2>{place.name}</h2>
+            <span>{place.distanceText}</span>
+            <strong>{place.travelTimeText}</strong>
+            <small>{place.description}</small>
+          </article>
+        ))}
+      </div>
+    </section>
+
+    <CTASection title="需要接送或交通建議？" copy="可先提供抵達時間、班機或船班資訊及同行人數，由民宿確認後安排。" primaryLabel="電話詢問" primaryHref="tel:+886905370600" secondaryLabel="常見問題" secondaryHref="/faq" />
+  </main>
+</MainLayout>
+
+<style>
+  .location-grid,
+  .place-grid {
+    display: grid;
+    gap: var(--space-5);
+  }
+
+  .map-frame {
+    display: grid;
+    min-height: 320px;
+    margin-top: var(--space-8);
+    place-items: center;
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    color: var(--color-surface);
+    text-align: center;
+    background:
+      linear-gradient(135deg, rgba(15, 139, 141, 0.9), rgba(20, 33, 61, 0.9)),
+      var(--color-secondary);
+  }
+
+  .map-frame strong,
+  .map-frame span {
+    display: block;
+  }
+
+  .map-frame strong {
+    font-size: var(--font-size-3xl);
+  }
+
+  .place-grid article {
+    display: grid;
+    gap: var(--space-2);
+    padding: var(--space-6);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    background: var(--color-surface);
+  }
+
+  .place-grid p {
+    margin: 0;
+    color: var(--color-primary);
+    font-weight: var(--font-weight-black);
+  }
+
+  .place-grid h2 {
+    margin: 0;
+    font-size: var(--font-size-xl);
+  }
+
+  .place-grid span,
+  .place-grid small {
+    color: var(--color-text-secondary);
+  }
+
+  @media (min-width: 860px) {
+    .location-grid {
+      grid-template-columns: minmax(0, 1fr) minmax(340px, 0.42fr);
+    }
+
+    .place-grid {
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+    }
+  }
+</style>

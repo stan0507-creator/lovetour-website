@@ -1,0 +1,31 @@
+---
+interface Props {
+  eyebrow?: string;
+  title: string;
+  copy?: string;
+  align?: "start" | "center";
+}
+
+const { eyebrow, title, copy, align = "start" } = Astro.props;
+---
+
+<header class:list={["section-heading", `section-heading--${align}`]}>
+  {eyebrow && <p class="eyebrow">{eyebrow}</p>}
+  <h2 class="section-title">{title}</h2>
+  {copy && <p class="section-copy">{copy}</p>}
+</header>
+
+<style>
+  .section-heading {
+    margin-bottom: clamp(var(--space-8), 5vw, var(--space-12));
+  }
+
+  .section-heading--center {
+    text-align: center;
+  }
+
+  .section-heading--center :global(.section-title),
+  .section-heading--center :global(.section-copy) {
+    margin-inline: auto;
+  }
+</style>

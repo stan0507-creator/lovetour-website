@@ -1,0 +1,112 @@
+---
+import type { MediaAssetContent, VillaRentalContent } from "../../content/types";
+import CtaLink from "../ui/CtaLink.astro";
+
+interface Props {
+  content: VillaRentalContent;
+  image?: MediaAssetContent;
+}
+
+const { content, image } = Astro.props;
+---
+
+<section id="private-stay" class="section private-stay">
+  <div class="container private-grid">
+    <div class="private-copy">
+      <p class="eyebrow">Private Stay</p>
+      <h2>{content.hero.title}</h2>
+      <p>{content.hero.copy}</p>
+      <div class="private-facts">
+        <div>
+          <strong>14-18 人</strong>
+          <span>適合人數</span>
+        </div>
+        <div>
+          <strong>6 間房</strong>
+          <span>Tour 館配置</span>
+        </div>
+      </div>
+      <CtaLink label="包棟詢問" href="/villa-rental" tone="accent" size="md" />
+    </div>
+    <div class="private-media">
+      {image && <img src={image.src} alt={image.alt} />}
+    </div>
+  </div>
+</section>
+
+<style>
+  .private-stay {
+    color: var(--color-surface);
+    background: var(--color-secondary);
+  }
+
+  .private-grid {
+    display: grid;
+    gap: var(--space-8);
+    align-items: center;
+  }
+
+  .private-copy :global(.eyebrow) {
+    color: color-mix(in srgb, var(--color-accent) 70%, white);
+  }
+
+  h2 {
+    margin: 0 0 var(--space-5);
+    font-size: clamp(var(--font-size-2xl), 5vw, var(--font-size-4xl));
+    line-height: var(--line-height-tight);
+  }
+
+  p {
+    max-width: 620px;
+    margin: 0;
+    color: color-mix(in srgb, var(--color-surface) 76%, transparent);
+    font-size: var(--font-size-md);
+    line-height: var(--line-height-relaxed);
+  }
+
+  .private-facts {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: var(--space-3);
+    max-width: 440px;
+    margin-block: var(--space-8);
+  }
+
+  .private-facts div {
+    padding: var(--space-5);
+    border: 1px solid color-mix(in srgb, var(--color-surface) 20%, transparent);
+    border-radius: var(--radius-lg);
+    background: color-mix(in srgb, var(--color-surface) 8%, transparent);
+  }
+
+  .private-facts strong,
+  .private-facts span {
+    display: block;
+  }
+
+  .private-facts strong {
+    font-size: var(--font-size-xl);
+  }
+
+  .private-facts span {
+    color: color-mix(in srgb, var(--color-surface) 68%, transparent);
+  }
+
+  .private-media {
+    overflow: hidden;
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-lg);
+  }
+
+  img {
+    width: 100%;
+    aspect-ratio: 4 / 3;
+    object-fit: cover;
+  }
+
+  @media (min-width: 860px) {
+    .private-grid {
+      grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
+    }
+  }
+</style>

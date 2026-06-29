@@ -1,0 +1,73 @@
+import type { NewsArticleContent } from "../types";
+
+export const newsArticles = [
+  {
+    id: "news-fireworks-sample",
+    title: "澎湖花火節住宿詢問提醒",
+    slug: "penghu-fireworks-stay-notice",
+    summary: "花火節期間住宿需求較高，建議提早確認同行人數、日期與交通方式。",
+    coverImageId: "media-offer-fireworks",
+    publishedAt: "2026-06-01",
+    category: "活動專案",
+    body: [
+      "這是一篇 sample 最新消息，用來測試消息列表與單篇文章版型。",
+      "正式內容會依每年花火節公告、住宿規則與實際房況確認後再更新。",
+      "目前不提供即時房況、價格計算或訂房流程。",
+    ],
+    seo: {
+      title: "澎湖花火節住宿詢問提醒｜樂圖漫遊會館",
+      description: "花火節住宿 sample news，提醒旅客提早確認日期、人數與交通。",
+      canonicalPath: "/news/penghu-fireworks-stay-notice",
+      ogImageId: "media-offer-fireworks",
+    },
+    contentStatus: "sample",
+    published: false,
+    priority: 10,
+  },
+  {
+    id: "news-private-stay-sample",
+    title: "多人旅行如何評估包棟需求",
+    slug: "private-stay-planning-sample",
+    summary: "家庭、朋友與多人同行可以先確認人數、公共空間需求與交通安排。",
+    coverImageId: "media-news-season",
+    publishedAt: "2026-05-20",
+    category: "包棟說明",
+    body: [
+      "包棟適合希望同住、共用公共空間並保留彈性的旅人。",
+      "詢問時建議提供入住日期、退房日期、成人與孩童人數，以及是否需要 KTV、麻將、烤肉或接送協助。",
+      "此篇為 sample data，正式包棟規則需後續確認。",
+    ],
+    seo: {
+      title: "多人旅行如何評估包棟需求｜樂圖漫遊會館",
+      description: "包棟住宿 sample news，協助旅客了解多人旅行詢問前可先準備的資訊。",
+      canonicalPath: "/news/private-stay-planning-sample",
+      ogImageId: "media-news-season",
+    },
+    contentStatus: "sample",
+    published: false,
+    priority: 20,
+  },
+  {
+    id: "news-transport-sample",
+    title: "澎湖交通與接送資訊整理中",
+    slug: "penghu-transportation-sample",
+    summary: "機場、港口、租車與接送資訊會在正式內容確認後更新。",
+    coverImageId: "media-location-harbor",
+    publishedAt: "2026-05-01",
+    category: "交通位置",
+    body: [
+      "此篇文章用來驗證交通資訊類型的最新消息呈現。",
+      "未來可補上機場、港口、租車、接送與停車建議。",
+      "目前不串接 Google Maps API，也不提供第三方服務預約。",
+    ],
+    seo: {
+      title: "澎湖交通與接送資訊整理中｜樂圖漫遊會館",
+      description: "交通位置 sample news，預留機場、港口、租車與接送資訊內容。",
+      canonicalPath: "/news/penghu-transportation-sample",
+      ogImageId: "media-location-harbor",
+    },
+    contentStatus: "sample",
+    published: false,
+    priority: 30,
+  },
+] satisfies readonly NewsArticleContent[];

@@ -1,0 +1,142 @@
+---
+import CTASection from "../components/ui/CTASection.astro";
+import EmptyState from "../components/ui/EmptyState.astro";
+import FAQAccordion from "../components/ui/FAQAccordion.astro";
+import PageHero from "../components/ui/PageHero.astro";
+import { getFAQs, getMediaAssetById, getPolicies, getVillaRentalContent } from "../content";
+import MainLayout from "../layouts/MainLayout.astro";
+
+const page = getVillaRentalContent();
+const heroImage = page?.seo.ogImageId ? getMediaAssetById(page.seo.ogImageId) : undefined;
+const villaFaqs = getFAQs().filter((faq) => page?.faqIds.includes(faq.id));
+const privatePolicies = getPolicies("private-stay");
+const seo = page?.seo ?? {
+  title: "包棟方案｜樂圖漫遊會館",
+  description: "樂圖漫遊會館包棟內容尚未發布。",
+  canonicalPath: "/villa-rental",
+};
+---
+
+<MainLayout title={seo.title} description={seo.description} canonicalPath={seo.canonicalPath} ogImageId={page?.seo.ogImageId}>
+  <main>
+    {page ? (
+      <>
+        <PageHero eyebrow="Villa Rental" title={page.hero.title} copy={page.hero.copy} image={heroImage} breadcrumbs={[{ label: "包棟方案" }]} />
+
+        <section class="section">
+          <div class="container villa-grid">
+            <article class="villa-copy">
+              <p class="eyebrow">Tour 館包棟定位</p>
+              <h2>{page.positioning.title}</h2>
+              <p>{page.positioning.copy}</p>
+              <strong>{page.capacityLabel}</strong>
+            </article>
+            <aside class="villa-panel">
+              <h2>適合旅人</h2>
+              <ul>
+                <li>家庭旅行</li>
+                <li>朋友同行</li>
+                <li>多人澎湖行程</li>
+                <li>想共用公共空間的旅人</li>
+              </ul>
+            </aside>
+          </div>
+        </section>
+
+        <section class="section section-muted">
+          <div class="container amenity-grid">
+            <article>
+              <h2>公共空間</h2>
+              <ul>{page.publicSpaces.map((space) => <li>{space}</li>)}</ul>
+            </article>
+            <article>
+              <h2>包棟設備與服務</h2>
+              <ul>{page.amenities.map((amenity) => <li>{amenity}</li>)}</ul>
+            </article>
+            <article>
+              <h2>服務提醒</h2>
+              <ul>{page.serviceNotes.map((note) => <li>{note}</li>)}</ul>
+            </article>
+          </div>
+        </section>
+
+        <section class="section section-muted">
+          <div class="container">
+            <p class="eyebrow">FAQ</p>
+            <h2 class="section-title">包棟常見問題</h2>
+            <FAQAccordion faqs={villaFaqs} policies={privatePolicies} />
+          </div>
+        </section>
+
+        <CTASection title="想詢問包棟日期與人數？" copy="包棟請先透過電話聯絡，提供預計入住日期、人數及需求，由民宿人員確認房況與相關細節。" primaryLabel="電話詢問" primaryHref="tel:+886905370600" secondaryLabel="查看房型" secondaryHref="/rooms" />
+      </>
+    ) : (
+      <section class="section">
+        <div class="container">
+          <EmptyState title="內容尚未發布" copy="此頁內容目前仍在內部草稿階段。" />
+        </div>
+      </section>
+    )}
+  </main>
+</MainLayout>
+
+<style>
+  .villa-grid,
+  .amenity-grid {
+    display: grid;
+    gap: var(--space-5);
+  }
+
+  .villa-copy,
+  .villa-panel,
+  .amenity-grid article,
+  .room-summary {
+    padding: var(--space-6);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    background: var(--color-surface);
+  }
+
+  h2 {
+    margin: 0 0 var(--space-4);
+  }
+
+  p {
+    margin: 0 0 var(--space-5);
+    color: var(--color-text-secondary);
+  }
+
+  strong {
+    color: var(--color-primary);
+  }
+
+  ul {
+    display: grid;
+    gap: var(--space-3);
+    padding-left: var(--space-5);
+    margin: 0;
+    color: var(--color-text-secondary);
+  }
+
+  .cluster {
+    margin-top: var(--space-5);
+  }
+
+  .cluster span {
+    padding: var(--space-2) var(--space-3);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-pill);
+    color: var(--color-text-secondary);
+    background: var(--color-background);
+  }
+
+  @media (min-width: 820px) {
+    .villa-grid {
+      grid-template-columns: 1fr 0.42fr;
+    }
+
+    .amenity-grid {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+  }
+</style>

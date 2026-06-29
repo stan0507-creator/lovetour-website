@@ -1,0 +1,112 @@
+---
+import type { MediaAssetContent, SiteProfileContent } from "../../content/types";
+import type { HeroContract } from "../../design-system/components";
+import CtaLink from "../ui/CtaLink.astro";
+
+interface Props {
+  profile: SiteProfileContent;
+  media?: MediaAssetContent;
+}
+
+const { profile, media } = Astro.props;
+
+const hero = {
+  eyebrow: profile.tagline,
+  title: profile.description,
+  summary:
+    "在澎湖的海風裡，把白天交給旅行，把夜晚交給好好休息。樂圖漫遊會館重視寬敞、整潔與睡眠舒適度，也用親切且彈性的服務陪旅客把行程安排得更順。",
+  mediaAssetId: media?.id,
+  actions: [
+    { label: "立即訂房", href: "#contact", variant: "primary" },
+    { label: "加 LINE 詢問", href: "#contact", variant: "secondary" },
+    { label: "查看房型", href: "#rooms", variant: "secondary" },
+  ],
+} satisfies HeroContract;
+---
+
+<section class="hero" aria-labelledby="hero-title">
+  {media && <img class="hero-image" src={media.src} alt={media.alt} />}
+  <div class="hero-scrim"></div>
+  <div class="container hero-content">
+    <p class="eyebrow">{hero.eyebrow}</p>
+    <h1 id="hero-title">{hero.title}</h1>
+    <p>{hero.summary}</p>
+    <div class="hero-actions">
+      <CtaLink label="電話詢問" href="tel:+886905370600" tone="accent" size="lg" />
+      <CtaLink label="聯絡我們" href="/contact" variant="outline" tone="primary" size="lg" />
+      <CtaLink label="查看房型" href="/rooms" variant="text" tone="primary" size="lg" />
+    </div>
+  </div>
+</section>
+
+<style>
+  .hero {
+    position: relative;
+    display: grid;
+    min-height: clamp(680px, 90vh, 860px);
+    align-items: end;
+    overflow: hidden;
+    color: var(--color-surface);
+  }
+
+  .hero-image,
+  .hero-scrim {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+  }
+
+  .hero-image {
+    object-fit: cover;
+  }
+
+  .hero-scrim {
+    background:
+      linear-gradient(180deg, rgba(20, 33, 61, 0.18), rgba(20, 33, 61, 0.82)),
+      linear-gradient(90deg, rgba(20, 33, 61, 0.72), rgba(20, 33, 61, 0.18));
+  }
+
+  .hero-content {
+    position: relative;
+    padding-block: clamp(var(--space-16), 11vw, var(--space-24));
+  }
+
+  .hero :global(.eyebrow) {
+    color: color-mix(in srgb, var(--color-accent) 70%, white);
+  }
+
+  h1 {
+    max-width: 920px;
+    margin: 0 0 var(--space-5);
+    font-family: var(--font-family-display);
+    font-size: clamp(2.6rem, 8vw, 6.25rem);
+    line-height: 0.98;
+    letter-spacing: var(--letter-spacing-normal);
+  }
+
+  p {
+    max-width: 680px;
+    margin: 0;
+    color: color-mix(in srgb, var(--color-surface) 84%, transparent);
+    font-size: clamp(var(--font-size-md), 2.2vw, var(--font-size-xl));
+    line-height: var(--line-height-relaxed);
+  }
+
+  .hero-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-3);
+    margin-top: var(--space-8);
+  }
+
+  @media (max-width: 560px) {
+    .hero {
+      min-height: 760px;
+    }
+
+    .hero-actions :global(.cta-link) {
+      width: 100%;
+    }
+  }
+</style>

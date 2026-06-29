@@ -1,0 +1,103 @@
+---
+import type { NearbyPlaceContent, SiteProfileContent } from "../../content/types";
+import CtaLink from "../ui/CtaLink.astro";
+import SectionHeading from "../ui/SectionHeading.astro";
+
+interface Props {
+  profile: SiteProfileContent;
+  places: NearbyPlaceContent[];
+}
+
+const { profile, places } = Astro.props;
+---
+
+<section id="contact" class="section section-muted contact-section">
+  <div class="container contact-grid">
+    <div>
+      <SectionHeading
+        eyebrow="Location & Contact"
+        title="抵達、交通、聯絡方式先放在旅客找得到的位置"
+        copy="如需確認房型、包棟、接送或租車行程協助，可先透過電話或聯絡頁整理需求。"
+      />
+      <div class="contact-actions">
+        <CtaLink label="電話詢問" href="tel:+886905370600" tone="primary" size="md" />
+        <CtaLink label="聯絡我們" href="/contact" variant="outline" tone="primary" size="md" />
+      </div>
+    </div>
+    <aside class="contact-panel" aria-label="聯絡與交通摘要">
+      <div class="contact-row">
+        <span>民宿</span>
+        <strong>{profile.name}</strong>
+      </div>
+      {profile.contacts.slice(0, 3).map((contact) => (
+        <div class="contact-row">
+          <span>{contact.label}</span>
+          <strong>{contact.value}</strong>
+        </div>
+      ))}
+      <div class="place-list">
+        {places.slice(0, 3).map((place) => (
+          <p><strong>{place.name}</strong><span>{place.travelTimeText}</span></p>
+        ))}
+      </div>
+    </aside>
+  </div>
+</section>
+
+<style>
+  .contact-grid {
+    display: grid;
+    gap: var(--space-8);
+    align-items: start;
+  }
+
+  .contact-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-3);
+  }
+
+  .contact-panel {
+    display: grid;
+    gap: var(--space-4);
+    padding: var(--space-6);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    background: var(--color-surface);
+    box-shadow: var(--shadow-md);
+  }
+
+  .contact-row {
+    display: grid;
+    gap: var(--space-1);
+    padding-bottom: var(--space-4);
+    border-bottom: 1px solid var(--color-border);
+  }
+
+  .contact-row span,
+  .place-list span {
+    color: var(--color-text-secondary);
+    font-size: var(--font-size-sm);
+  }
+
+  .contact-row strong {
+    font-size: var(--font-size-lg);
+  }
+
+  .place-list {
+    display: grid;
+    gap: var(--space-3);
+  }
+
+  .place-list p {
+    display: grid;
+    gap: var(--space-1);
+    margin: 0;
+  }
+
+  @media (min-width: 860px) {
+    .contact-grid {
+      grid-template-columns: minmax(0, 1fr) minmax(340px, 0.42fr);
+    }
+  }
+</style>

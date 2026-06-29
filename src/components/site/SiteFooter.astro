@@ -1,0 +1,103 @@
+---
+import type { SiteProfileContent } from "../../content/types";
+import CtaLink from "../ui/CtaLink.astro";
+
+interface Props {
+  profile: SiteProfileContent;
+  currentPath?: string;
+}
+
+const { profile, currentPath = "/" } = Astro.props;
+
+const footerLinks = [
+  { label: "首頁", href: "/" },
+  { label: "關於樂圖", href: "/about" },
+  { label: "房型列表", href: "/rooms" },
+  { label: "包棟方案", href: "/villa-rental" },
+  { label: "最新消息", href: "/news" },
+  { label: "常見問題", href: "/faq" },
+  { label: "交通位置", href: "/location" },
+  { label: "聯絡我們", href: "/contact" },
+];
+---
+
+<footer class="site-footer">
+  <div class="container footer-grid">
+    <div>
+      <p class="footer-kicker">Penghu Stay</p>
+      <h2>{profile.name}</h2>
+      <p>{profile.description}</p>
+    </div>
+    <nav class="footer-nav" aria-label="頁尾導覽">
+      {footerLinks.map((link) => (
+        <a href={link.href} aria-current={currentPath === link.href ? "page" : undefined}>{link.label}</a>
+      ))}
+    </nav>
+    <div class="footer-actions">
+      <CtaLink label="查看房型" href="/rooms" variant="outline" tone="primary" size="md" />
+      <CtaLink label="包棟詢問" href="/villa-rental" variant="solid" tone="primary" size="md" />
+    </div>
+  </div>
+</footer>
+
+<style>
+  .site-footer {
+    padding-block: var(--space-16);
+    color: var(--color-surface);
+    background: var(--color-secondary);
+  }
+
+  .footer-grid {
+    display: grid;
+    gap: var(--space-8);
+  }
+
+  .footer-kicker {
+    margin: 0 0 var(--space-2);
+    color: color-mix(in srgb, var(--color-accent) 70%, white);
+    font-weight: var(--font-weight-black);
+  }
+
+  h2 {
+    margin: 0 0 var(--space-4);
+    font-size: clamp(var(--font-size-2xl), 4vw, var(--font-size-4xl));
+    line-height: var(--line-height-tight);
+  }
+
+  p {
+    max-width: 620px;
+    margin: 0;
+    color: color-mix(in srgb, var(--color-surface) 76%, transparent);
+  }
+
+  .footer-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-3);
+    align-items: end;
+  }
+
+  .footer-nav {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: var(--space-3);
+  }
+
+  .footer-nav a {
+    color: color-mix(in srgb, var(--color-surface) 78%, transparent);
+    font-size: var(--font-size-sm);
+    font-weight: var(--font-weight-bold);
+  }
+
+  .footer-nav a:hover,
+  .footer-nav a[aria-current="page"] {
+    color: var(--color-surface);
+  }
+
+  @media (min-width: 768px) {
+    .footer-grid {
+      grid-template-columns: minmax(0, 1fr) minmax(220px, 0.35fr) auto;
+      align-items: end;
+    }
+  }
+</style>

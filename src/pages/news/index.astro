@@ -1,0 +1,36 @@
+---
+import EmptyState from "../../components/ui/EmptyState.astro";
+import NewsCard from "../../components/ui/NewsCard.astro";
+import PageHero from "../../components/ui/PageHero.astro";
+import { getMediaAssetById, getNewsArticles } from "../../content";
+import MainLayout from "../../layouts/MainLayout.astro";
+
+const articles = getNewsArticles();
+const heroImage = getMediaAssetById("media-news-season");
+---
+
+<MainLayout title="最新消息｜樂圖漫遊會館" description="樂圖漫遊會館最新消息列表。" canonicalPath="/news" ogImageId="media-news-season">
+  <main>
+    <PageHero eyebrow="News" title="最新消息" copy="正式消息會在內容確認後再上架；目前暫無公告文章。" image={heroImage} breadcrumbs={[{ label: "最新消息" }]} />
+    <section class="section section-muted">
+      <div class="container news-grid">
+        {articles.length > 0 ? articles.map((article) => (
+          <NewsCard article={article} cover={article.coverImageId ? getMediaAssetById(article.coverImageId) : undefined} />
+        )) : <EmptyState title="目前沒有消息" copy="正式消息資料會在後續階段補齊。" />}
+      </div>
+    </section>
+  </main>
+</MainLayout>
+
+<style>
+  .news-grid {
+    display: grid;
+    gap: var(--space-5);
+  }
+
+  @media (min-width: 820px) {
+    .news-grid {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+  }
+</style>

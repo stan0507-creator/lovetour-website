@@ -1,0 +1,37 @@
+---
+import BrandFeaturesSection from "../components/home/BrandFeaturesSection.astro";
+import ContactSummarySection from "../components/home/ContactSummarySection.astro";
+import FAQSummarySection from "../components/home/FAQSummarySection.astro";
+import HeroSection from "../components/home/HeroSection.astro";
+import PrivateStaySection from "../components/home/PrivateStaySection.astro";
+import RoomRecommendationsSection from "../components/home/RoomRecommendationsSection.astro";
+import {
+  getContentSnapshotFromSource,
+  getMediaAssetById,
+  getNearbyPlaces,
+  getPolicies,
+  getVillaRentalContent,
+} from "../content";
+import MainLayout from "../layouts/MainLayout.astro";
+
+const content = await getContentSnapshotFromSource();
+const profile = content.siteProfile;
+const rooms = content.rooms;
+const policies = getPolicies();
+const faqs = content.faqs;
+const nearbyPlaces = getNearbyPlaces();
+const heroMedia = getMediaAssetById("media-brand-hero-sea");
+const villaRental = getVillaRentalContent();
+const privateStayImage = getMediaAssetById("media-room-private-stay");
+---
+
+<MainLayout title={`${profile.name}｜澎湖民宿`} description={profile.description} canonicalPath="/" ogImageId="media-brand-hero-sea">
+  <main>
+    <HeroSection profile={profile} media={heroMedia} />
+    <BrandFeaturesSection profile={profile} policies={policies} />
+    <RoomRecommendationsSection rooms={rooms} />
+    {villaRental && <PrivateStaySection content={villaRental} image={privateStayImage} />}
+    <FAQSummarySection faqs={faqs} />
+    <ContactSummarySection profile={profile} places={nearbyPlaces} />
+  </main>
+</MainLayout>

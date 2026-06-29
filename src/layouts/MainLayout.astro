@@ -1,0 +1,59 @@
+---
+import "../styles/global.css";
+import { getMediaAssetById, getSiteProfile, isDraftContentMode } from "../content";
+import SiteFooter from "../components/site/SiteFooter.astro";
+import SiteHeader from "../components/site/SiteHeader.astro";
+
+interface Props {
+  title: string;
+  description: string;
+  canonicalPath?: string;
+  ogImageId?: string;
+}
+
+const { title, description, canonicalPath, ogImageId } = Astro.props;
+const profile = getSiteProfile();
+const showDraftBanner = isDraftContentMode();
+const canonicalUrl = canonicalPath ? new URL(canonicalPath, Astro.site ?? "https://www.lovetour880.com").toString() : undefined;
+const ogImage = ogImageId ? getMediaAssetById(ogImageId) : getMediaAssetById("media-brand-hero-sea");
+---
+
+<!doctype html>
+<html lang="zh-Hant">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content={description} />
+    {canonicalUrl && <link rel="canonical" href={canonicalUrl} />}
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    {ogImage && <meta property="og:image" content={ogImage.src} />}
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="樂圖漫遊會館" />
+    <meta name="theme-color" content="#0f8b8d" />
+    <title>{title}</title>
+  </head>
+  <body>
+    <div class="page-shell">
+      {showDraftBanner && (
+        <div class="draft-banner" role="status">
+          內部草稿預覽：部分照片、連結及營運規則尚未確認，請勿公開使用。
+        </div>
+      )}
+      <SiteHeader profile={profile} currentPath={Astro.url.pathname} />
+      <slot />
+      <SiteFooter profile={profile} currentPath={Astro.url.pathname} />
+    </div>
+  </body>
+</html>
+
+<style>
+  .draft-banner {
+    padding: var(--space-2) var(--space-4);
+    color: var(--color-surface);
+    text-align: center;
+    font-size: var(--font-size-sm);
+    font-weight: var(--font-weight-bold);
+    background: var(--color-warning);
+  }
+</style>

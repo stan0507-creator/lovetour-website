@@ -1,0 +1,26 @@
+{
+  "name": "lovetour880-official-site",
+  "private": true,
+  "type": "module",
+  "description": "Official website rebuild for Lovetour Penghu stay.",
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "astro": "astro",
+    "check": "astro check",
+    "sanity:dev": "cd sanity && sanity dev",
+    "sanity:build": "cd sanity && sanity build dist --yes",
+    "phase": "echo \"Phase 6 real content audit and business flow preparation only. No CMS, API, AI, Odingding integration, booking, payment, member, or backend features.\""
+  },
+  "devDependencies": {
+    "@astrojs/check": "^0.9.9",
+    "@sanity/client": "^7.23.0",
+    "astro": "^7.0.3",
+    "react": "^19.2.7",
+    "react-dom": "^19.2.7",
+    "sanity": "^6.2.0",
+    "styled-components": "^6.4.3",
+    "typescript": "^5.9.0"
+  }
+}

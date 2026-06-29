@@ -1,0 +1,22 @@
+---
+import FAQAccordion from "../components/ui/FAQAccordion.astro";
+import PageHero from "../components/ui/PageHero.astro";
+import { getContentSnapshotFromSource, getMediaAssetById, getPolicies } from "../content";
+import MainLayout from "../layouts/MainLayout.astro";
+
+const content = await getContentSnapshotFromSource();
+const faqs = content.faqs;
+const policies = getPolicies();
+const heroImage = getMediaAssetById("media-brand-hero-sea");
+---
+
+<MainLayout title="常見問題｜樂圖漫遊會館" description="樂圖漫遊會館常見問題，整理已確認的入住、接送、加床、包棟與住宿規則。" canonicalPath="/faq" ogImageId="media-brand-hero-sea">
+  <main>
+    <PageHero eyebrow="FAQ" title="常見問題" copy="以下先整理已確認的基本規則；其餘營運細節在確認前不顯示。" image={heroImage} breadcrumbs={[{ label: "常見問題" }]} />
+    <section class="section section-muted">
+      <div class="container">
+        <FAQAccordion faqs={faqs} policies={policies} />
+      </div>
+    </section>
+  </main>
+</MainLayout>

@@ -1,0 +1,181 @@
+---
+import type { SiteProfileContent } from "../../content/types";
+import CtaLink from "../ui/CtaLink.astro";
+
+interface Props {
+  profile: SiteProfileContent;
+  currentPath?: string;
+}
+
+const { profile, currentPath = "/" } = Astro.props;
+
+const navItems = [
+  { label: "關於樂圖", href: "/about" },
+  { label: "房型", href: "/rooms" },
+  { label: "包棟方案", href: "/villa-rental" },
+  { label: "最新消息", href: "/news" },
+  { label: "FAQ", href: "/faq" },
+  { label: "交通位置", href: "/location" },
+  { label: "聯絡我們", href: "/contact" },
+];
+
+const isActive = (href: string) => href === "/" ? currentPath === "/" : currentPath.startsWith(href);
+---
+
+<header class="site-header">
+  <a class="brand" href="/" aria-label="樂圖漫遊會館首頁" aria-current={currentPath === "/" ? "page" : undefined}>
+    <span class="brand-mark">LT</span>
+    <span>
+      <strong>{profile.name}</strong>
+      <small>{profile.tagline}</small>
+    </span>
+  </a>
+
+  <nav class="nav" aria-label="主選單">
+    {navItems.map((item) => <a class:list={[isActive(item.href) && "is-active"]} href={item.href} aria-current={isActive(item.href) ? "page" : undefined}>{item.label}</a>)}
+  </nav>
+
+  <div class="header-action">
+    <CtaLink label="電話詢問" href="tel:+886905370600" variant="outline" tone="primary" size="sm" />
+  </div>
+
+  <details class="mobile-nav">
+    <summary aria-label="開啟導覽選單">選單</summary>
+    <div>
+      {navItems.map((item) => <a class:list={[isActive(item.href) && "is-active"]} href={item.href} aria-current={isActive(item.href) ? "page" : undefined}>{item.label}</a>)}
+      <a href="tel:+886905370600">電話詢問</a>
+    </div>
+  </details>
+</header>
+
+<style>
+  .site-header {
+    position: sticky;
+    z-index: var(--z-index-sticky);
+    top: 0;
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: var(--space-4);
+    align-items: center;
+    padding: var(--space-4) clamp(var(--space-4), 4vw, var(--space-10));
+    background: color-mix(in srgb, var(--color-background) 92%, transparent);
+    border-bottom: 1px solid var(--color-border);
+    backdrop-filter: blur(18px);
+  }
+
+  .brand {
+    display: inline-flex;
+    min-width: 0;
+    align-items: center;
+    gap: var(--space-3);
+  }
+
+  .brand-mark {
+    display: grid;
+    width: 2.75rem;
+    height: 2.75rem;
+    flex: 0 0 auto;
+    place-items: center;
+    border: 1px solid var(--color-primary);
+    border-radius: var(--radius-pill);
+    color: var(--color-primary);
+    font-weight: var(--font-weight-black);
+  }
+
+  .brand strong,
+  .brand small {
+    display: block;
+  }
+
+  .brand strong {
+    font-size: var(--font-size-base);
+    line-height: var(--line-height-heading);
+  }
+
+  .brand small {
+    color: var(--color-text-secondary);
+    font-size: var(--font-size-xs);
+    line-height: var(--line-height-heading);
+  }
+
+  .nav,
+  .header-action,
+  .mobile-nav {
+    display: none;
+  }
+
+  .mobile-nav {
+    justify-self: end;
+  }
+
+  .mobile-nav summary {
+    cursor: pointer;
+    list-style: none;
+    padding: var(--space-2) var(--space-4);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-pill);
+    color: var(--color-primary);
+    font-weight: var(--font-weight-black);
+  }
+
+  .mobile-nav summary::-webkit-details-marker {
+    display: none;
+  }
+
+  .mobile-nav div {
+    position: fixed;
+    inset: 5rem var(--space-4) auto;
+    display: grid;
+    gap: var(--space-1);
+    padding: var(--space-3);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    background: var(--color-surface);
+    box-shadow: var(--shadow-lg);
+  }
+
+  .mobile-nav a {
+    padding: var(--space-3) var(--space-4);
+    border-radius: var(--radius-md);
+    font-weight: var(--font-weight-bold);
+  }
+
+  .mobile-nav a.is-active,
+  .mobile-nav a:hover {
+    color: var(--color-primary);
+    background: var(--color-surface-muted);
+  }
+
+  @media (min-width: 880px) {
+    .site-header {
+      grid-template-columns: auto 1fr auto;
+    }
+
+    .nav {
+      display: flex;
+      justify-content: center;
+      gap: clamp(var(--space-4), 2vw, var(--space-8));
+      color: var(--color-text-secondary);
+      font-size: var(--font-size-sm);
+      font-weight: var(--font-weight-bold);
+    }
+
+    .nav a:hover {
+      color: var(--color-primary);
+    }
+
+    .nav a.is-active {
+      color: var(--color-primary);
+    }
+
+    .header-action {
+      display: block;
+    }
+  }
+
+  @media (max-width: 879px) {
+    .mobile-nav {
+      display: block;
+    }
+  }
+</style>

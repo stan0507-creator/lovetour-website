@@ -1,0 +1,63 @@
+---
+import type { MediaAssetContent, NewsArticleContent } from "../../content/types";
+
+interface Props {
+  article: NewsArticleContent;
+  cover?: MediaAssetContent;
+}
+
+const { article, cover } = Astro.props;
+---
+
+<article class="news-card">
+  {cover && <img src={cover.src} alt={cover.alt} />}
+  <div>
+    <p class="news-meta">{article.category}｜{article.publishedAt}</p>
+    <h2><a href={`/news/${article.slug}`}>{article.title}</a></h2>
+    <p>{article.summary}</p>
+  </div>
+</article>
+
+<style>
+  .news-card {
+    overflow: hidden;
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    background: var(--color-surface);
+    box-shadow: var(--shadow-sm);
+  }
+
+  img {
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    object-fit: cover;
+  }
+
+  div {
+    display: grid;
+    gap: var(--space-3);
+    padding: var(--space-6);
+  }
+
+  .news-meta {
+    margin: 0;
+    color: var(--color-primary);
+    font-size: var(--font-size-sm);
+    font-weight: var(--font-weight-black);
+  }
+
+  h2 {
+    margin: 0;
+    font-size: var(--font-size-xl);
+    line-height: var(--line-height-heading);
+  }
+
+  h2 a:hover {
+    color: var(--color-primary);
+  }
+
+  p {
+    margin: 0;
+    color: var(--color-text-secondary);
+  }
+</style>

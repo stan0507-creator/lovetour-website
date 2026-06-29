@@ -1,0 +1,77 @@
+---
+import CtaLink from "./CtaLink.astro";
+
+interface Props {
+  title: string;
+  copy: string;
+  primaryLabel?: string;
+  primaryHref?: string;
+  secondaryLabel?: string;
+  secondaryHref?: string;
+}
+
+const {
+  title,
+  copy,
+  primaryLabel = "加 LINE 詢問",
+  primaryHref = "/contact",
+  secondaryLabel = "查看房型",
+  secondaryHref = "/rooms",
+} = Astro.props;
+---
+
+<section class="cta-section">
+  <div class="container cta-grid">
+    <div>
+      <p class="eyebrow">Next Step</p>
+      <h2>{title}</h2>
+      <p>{copy}</p>
+    </div>
+    <div class="cta-actions">
+      <CtaLink label={primaryLabel} href={primaryHref} tone="accent" size="md" />
+      <CtaLink label={secondaryLabel} href={secondaryHref} variant="outline" tone="primary" size="md" />
+    </div>
+  </div>
+</section>
+
+<style>
+  .cta-section {
+    padding-block: var(--space-16);
+    color: var(--color-surface);
+    background: var(--color-secondary);
+  }
+
+  .cta-grid {
+    display: grid;
+    gap: var(--space-8);
+    align-items: center;
+  }
+
+  :global(.eyebrow) {
+    color: color-mix(in srgb, var(--color-accent) 74%, white);
+  }
+
+  h2 {
+    margin: 0 0 var(--space-4);
+    font-size: clamp(var(--font-size-2xl), 4vw, var(--font-size-4xl));
+    line-height: var(--line-height-tight);
+  }
+
+  p {
+    max-width: 680px;
+    margin: 0;
+    color: color-mix(in srgb, var(--color-surface) 76%, transparent);
+  }
+
+  .cta-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-3);
+  }
+
+  @media (min-width: 768px) {
+    .cta-grid {
+      grid-template-columns: 1fr auto;
+    }
+  }
+</style>

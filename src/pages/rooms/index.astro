@@ -1,0 +1,38 @@
+---
+import CTASection from "../../components/ui/CTASection.astro";
+import PageHero from "../../components/ui/PageHero.astro";
+import RoomCard from "../../components/ui/RoomCard.astro";
+import { getContentSnapshotFromSource, getMediaAssetById } from "../../content";
+import MainLayout from "../../layouts/MainLayout.astro";
+
+const content = await getContentSnapshotFromSource();
+const rooms = content.rooms;
+const heroImage = getMediaAssetById("media-room-family");
+---
+
+<MainLayout title="房型列表｜樂圖漫遊會館" description="查看樂圖漫遊會館 12 間房型草稿資料，包含建議入住人數、床型與主要特色。" canonicalPath="/rooms" ogImageId="media-room-family">
+  <main>
+    <PageHero eyebrow="Rooms" title="房型列表" copy="目前先呈現已確認的房名、建議入住人數與床型；正式照片、詳細介紹與訂房連結會在後續確認後補上。" image={heroImage} breadcrumbs={[{ label: "房型列表" }]} />
+
+    <section class="section section-muted">
+      <div class="container room-grid">
+        {rooms.map((room) => <RoomCard room={room} />)}
+      </div>
+    </section>
+
+    <CTASection title="還不確定哪個房型適合？" copy="可以先整理日期、人數與同行需求，再透過電話或聯絡頁詢問。" primaryLabel="電話詢問" primaryHref="tel:+886905370600" secondaryLabel="包棟詢問" secondaryHref="/villa-rental" />
+  </main>
+</MainLayout>
+
+<style>
+  .room-grid {
+    display: grid;
+    gap: var(--space-5);
+  }
+
+  @media (min-width: 820px) {
+    .room-grid {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+  }
+</style>

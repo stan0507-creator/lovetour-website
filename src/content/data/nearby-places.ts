@@ -1,0 +1,48 @@
+import type { NearbyPlaceContent } from "../types";
+
+export const nearbyPlaces = [
+  {
+    id: "place-penghu-airport",
+    name: "澎湖機場",
+    category: "airport",
+    distanceText: "sample distance",
+    travelTimeText: "車程約 10-20 分鐘，依實際位置確認",
+    description: "未來可補上接送、租車與計程車建議。",
+    contentStatus: "sample",
+    published: false,
+    priority: 10,
+  },
+  {
+    id: "place-magong-harbor",
+    name: "馬公港",
+    category: "harbor",
+    distanceText: "sample distance",
+    travelTimeText: "車程依實際位置確認",
+    description: "可作為離島交通與抵達方式內容。",
+    contentStatus: "sample",
+    published: false,
+    priority: 20,
+  },
+  {
+    id: "place-downtown-food",
+    name: "馬公市區餐飲",
+    category: "restaurant",
+    distanceText: "sample distance",
+    travelTimeText: "適合放附近餐廳與晚餐建議",
+    description: "正式內容可補推薦餐廳類型，不一定要放特定店家。",
+    contentStatus: "sample",
+    published: false,
+    priority: 30,
+  },
+  {
+    id: "place-beach",
+    name: "澎湖海岸景點",
+    category: "attraction",
+    distanceText: "sample distance",
+    travelTimeText: "依景點不同而定",
+    description: "可作為親子、拍照、看海行程建議。",
+    contentStatus: "sample",
+    published: false,
+    priority: 40,
+  },
+] satisfies readonly NearbyPlaceContent[];

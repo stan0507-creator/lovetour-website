@@ -1,0 +1,94 @@
+---
+import type { PolicyContent, SiteProfileContent } from "../../content/types";
+import SectionHeading from "../ui/SectionHeading.astro";
+
+interface FeatureItem {
+  title: string;
+  copy: string;
+}
+
+interface Props {
+  profile: SiteProfileContent;
+  policies: PolicyContent[];
+}
+
+const { profile, policies } = Astro.props;
+
+const features: FeatureItem[] = [
+  {
+    title: "回來能真正休息",
+    copy: "我們重視房間乾淨整潔、空間寬敞舒適與良好的睡眠品質。",
+  },
+  {
+    title: "資訊清楚好詢問",
+    copy: `入住 ${profile.checkInTime ?? "16:00"} 後、退房 ${profile.checkOutTime ?? "11:00"} 前；若房間提前整理完成，會盡量協助提早入住。`,
+  },
+  {
+    title: "同行方式更彈性",
+    copy: policies.find((policy) => policy.type === "private-stay")?.content ?? "包棟與多人同行規則會在後續階段補齊。",
+  },
+];
+---
+
+<section id="features" class="section brand-features">
+  <div class="container">
+    <SectionHeading
+      eyebrow="Why Stay Here"
+      title="乾淨、溫暖，保留澎湖旅行該有的放鬆感"
+      copy="樂圖漫遊不是制式化飯店，而是一間重視人與人互動、願意站在旅客角度思考的民宿。"
+    />
+    <div class="feature-grid">
+      {features.map((feature, index) => (
+        <article class="feature-card">
+          <span>{String(index + 1).padStart(2, "0")}</span>
+          <h3>{feature.title}</h3>
+          <p>{feature.copy}</p>
+        </article>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .brand-features {
+    background: var(--color-background);
+  }
+
+  .feature-grid {
+    display: grid;
+    gap: var(--space-4);
+  }
+
+  .feature-card {
+    min-height: 220px;
+    padding: var(--space-6);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    background: var(--color-surface);
+    box-shadow: var(--shadow-sm);
+  }
+
+  .feature-card span {
+    display: inline-flex;
+    margin-bottom: var(--space-8);
+    color: var(--color-primary);
+    font-weight: var(--font-weight-black);
+  }
+
+  h3 {
+    margin: 0 0 var(--space-3);
+    font-size: var(--font-size-xl);
+    line-height: var(--line-height-heading);
+  }
+
+  p {
+    margin: 0;
+    color: var(--color-text-secondary);
+  }
+
+  @media (min-width: 768px) {
+    .feature-grid {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+  }
+</style>

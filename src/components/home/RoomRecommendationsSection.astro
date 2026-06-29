@@ -1,0 +1,109 @@
+---
+import type { Room } from "../../domain/models";
+import CtaLink from "../ui/CtaLink.astro";
+import SectionHeading from "../ui/SectionHeading.astro";
+
+interface Props {
+  rooms: Room[];
+}
+
+const { rooms } = Astro.props;
+const recommendedRooms = rooms.slice(0, 3);
+---
+
+<section id="rooms" class="section section-muted">
+  <div class="container">
+    <SectionHeading
+      eyebrow="Rooms"
+      title="12 間房，各自保留好好休息的節奏"
+      copy="目前先放入已確認的房名、人數與床型，正式照片與更完整房型介紹會在後續素材盤點後補上。"
+    />
+    <div class="room-grid">
+      {recommendedRooms.map((room) => (
+        <article class="room-card">
+          {room.photos[0] && <img src={room.photos[0].src} alt={room.photos[0].alt} />}
+          <div class="room-body">
+            <p class="room-meta">建議 {room.capacity.standard} 人｜{room.bedSetup}</p>
+            <h3>{room.name}</h3>
+            <p>{room.summary}</p>
+            <div class="amenities" aria-label="房型設備">
+              {room.amenities.slice(0, 3).map((amenity) => <span>{amenity}</span>)}
+            </div>
+          </div>
+        </article>
+      ))}
+    </div>
+    <div class="room-action">
+      <CtaLink label="查看房型" href="/rooms" variant="outline" tone="primary" size="md" />
+    </div>
+  </div>
+</section>
+
+<style>
+  .room-grid {
+    display: grid;
+    gap: var(--space-5);
+  }
+
+  .room-card {
+    overflow: hidden;
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    background: var(--color-surface);
+    box-shadow: var(--shadow-sm);
+  }
+
+  img {
+    width: 100%;
+    aspect-ratio: 4 / 3;
+    object-fit: cover;
+  }
+
+  .room-body {
+    padding: var(--space-6);
+  }
+
+  .room-meta {
+    margin: 0 0 var(--space-2);
+    color: var(--color-primary);
+    font-size: var(--font-size-sm);
+    font-weight: var(--font-weight-black);
+  }
+
+  h3 {
+    margin: 0 0 var(--space-3);
+    font-size: var(--font-size-xl);
+    line-height: var(--line-height-heading);
+  }
+
+  p {
+    margin: 0;
+    color: var(--color-text-secondary);
+  }
+
+  .amenities {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-2);
+    margin-top: var(--space-5);
+  }
+
+  .amenities span {
+    padding: var(--space-2) var(--space-3);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-pill);
+    color: var(--color-text-secondary);
+    font-size: var(--font-size-sm);
+    background: var(--color-background);
+  }
+
+  .room-action {
+    margin-top: var(--space-8);
+  }
+
+  @media (min-width: 820px) {
+    .room-grid {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+  }
+</style>

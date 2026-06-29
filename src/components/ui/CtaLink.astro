@@ -1,0 +1,82 @@
+---
+import type { ButtonContract } from "../../design-system/components";
+
+interface Props extends ButtonContract {}
+
+const {
+  href = "#",
+  label,
+  variant = "solid",
+  tone = "primary",
+  size = "md",
+  ariaLabel,
+} = Astro.props;
+---
+
+<a class:list={["cta-link", `cta-link--${variant}`, `cta-link--${tone}`, `cta-link--${size}`]} href={href} aria-label={ariaLabel}>
+  <span>{label}</span>
+</a>
+
+<style>
+  .cta-link {
+    display: inline-flex;
+    min-height: 2.875rem;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid transparent;
+    border-radius: var(--radius-pill);
+    font-weight: var(--font-weight-black);
+    line-height: 1;
+    transition:
+      transform var(--duration-base) var(--easing-standard),
+      background var(--duration-base) var(--easing-standard),
+      border-color var(--duration-base) var(--easing-standard);
+  }
+
+  .cta-link:hover {
+    transform: translateY(-1px);
+  }
+
+  .cta-link--sm {
+    min-height: 2.5rem;
+    padding: 0 var(--space-4);
+    font-size: var(--font-size-sm);
+  }
+
+  .cta-link--md {
+    padding: 0 var(--space-5);
+    font-size: var(--font-size-base);
+  }
+
+  .cta-link--lg {
+    min-height: 3.25rem;
+    padding: 0 var(--space-6);
+    font-size: var(--font-size-md);
+  }
+
+  .cta-link--solid.cta-link--primary {
+    color: var(--color-surface);
+    background: var(--color-primary);
+    box-shadow: var(--shadow-md);
+  }
+
+  .cta-link--solid.cta-link--accent {
+    color: var(--color-surface);
+    background: var(--color-accent);
+    box-shadow: var(--shadow-md);
+  }
+
+  .cta-link--outline,
+  .cta-link--ghost {
+    color: var(--color-text-primary);
+    background: color-mix(in srgb, var(--color-surface) 84%, transparent);
+    border-color: var(--color-border);
+  }
+
+  .cta-link--text {
+    min-height: auto;
+    padding-inline: 0;
+    color: var(--color-primary);
+    border-radius: var(--radius-none);
+  }
+</style>

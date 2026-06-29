@@ -1,0 +1,146 @@
+---
+import ContactSummary from "../components/ui/ContactSummary.astro";
+import PageHero from "../components/ui/PageHero.astro";
+import { getMediaAssetById, getNearbyPlaces, getSiteProfile } from "../content";
+import MainLayout from "../layouts/MainLayout.astro";
+
+const profile = getSiteProfile();
+const places = getNearbyPlaces();
+const heroImage = getMediaAssetById("media-brand-hero-sea");
+---
+
+<MainLayout title="聯絡我們｜樂圖漫遊會館" description="樂圖漫遊會館聯絡方式，包含電話、LINE ID、Email、地址與住宿需求整理表單。" canonicalPath="/contact" ogImageId="media-brand-hero-sea">
+  <main>
+    <PageHero eyebrow="Contact" title="聯絡我們" copy="如需確認房型、包棟、接送或租車行程協助，可先整理日期、人數與需求。" image={heroImage} breadcrumbs={[{ label: "聯絡我們" }]} />
+
+    <section class="section">
+      <div class="container contact-page-grid">
+        <div>
+          <p class="eyebrow">Inquiry Form</p>
+          <h2 class="section-title">先整理你的住宿需求</h2>
+          <p class="section-copy">此表單目前只在本機草稿中協助整理欄位，不會送出資料，也不會建立訂房或後台紀錄。</p>
+          <form class="contact-form" data-draft-contact-form>
+            <label>
+              姓名
+              <input name="name" autocomplete="name" required />
+            </label>
+            <label>
+              電話
+              <input name="phone" autocomplete="tel" required />
+            </label>
+            <label>
+              Email
+              <input name="email" type="email" autocomplete="email" required />
+            </label>
+            <label>
+              入住日期
+              <input name="checkin" type="date" required />
+            </label>
+            <label>
+              人數
+              <input name="guests" type="number" min="1" required />
+            </label>
+            <label class="full">
+              詢問內容
+              <textarea name="message" rows="5" required></textarea>
+            </label>
+            <p class="form-note">此表單只做欄位檢查，不會送出資料。</p>
+            <button type="submit">檢查欄位</button>
+            <p class="form-message" data-form-message aria-live="polite"></p>
+          </form>
+        </div>
+        <ContactSummary profile={profile} places={places} />
+      </div>
+    </section>
+  </main>
+</MainLayout>
+
+<style>
+  .contact-page-grid {
+    display: grid;
+    gap: var(--space-8);
+    align-items: start;
+  }
+
+  .contact-form {
+    display: grid;
+    gap: var(--space-4);
+    margin-top: var(--space-8);
+  }
+
+  label {
+    display: grid;
+    gap: var(--space-2);
+    color: var(--color-text-secondary);
+    font-weight: var(--font-weight-bold);
+  }
+
+  input,
+  textarea {
+    width: 100%;
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    padding: var(--space-3) var(--space-4);
+    color: var(--color-text-primary);
+    background: var(--color-surface);
+  }
+
+  textarea {
+    resize: vertical;
+  }
+
+  button {
+    justify-self: start;
+    min-height: 3rem;
+    border: 0;
+    border-radius: var(--radius-pill);
+    padding: 0 var(--space-6);
+    color: var(--color-surface);
+    background: var(--color-primary);
+    font-weight: var(--font-weight-black);
+    cursor: pointer;
+  }
+
+  .form-note,
+  .form-message {
+    margin: 0;
+    color: var(--color-text-secondary);
+    font-size: var(--font-size-sm);
+  }
+
+  .form-message {
+    color: var(--color-success);
+    font-weight: var(--font-weight-bold);
+  }
+
+  @media (min-width: 760px) {
+    .contact-form {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .full,
+    .form-note,
+    .form-message {
+      grid-column: 1 / -1;
+    }
+  }
+
+  @media (min-width: 900px) {
+    .contact-page-grid {
+      grid-template-columns: minmax(0, 1fr) minmax(340px, 0.42fr);
+    }
+  }
+</style>
+
+<script>
+  const form = document.querySelector("[data-draft-contact-form]");
+
+  form?.addEventListener("submit", (event) => {
+    event.preventDefault();
+    const message = form.querySelector("[data-form-message]");
+
+    if (message instanceof HTMLElement) {
+      message.textContent = "欄位檢查已通過，但目前不會送出資料。";
+    }
+  });
+</script>
