@@ -14,7 +14,23 @@ export const hasSanityConfig = (): boolean => {
   return Boolean(import.meta.env.PUBLIC_SANITY_PROJECT_ID && import.meta.env.PUBLIC_SANITY_DATASET);
 };
 
+export const assertSanityConfig = (): void => {
+  if (getContentSource() !== "sanity") {
+    return;
+  }
+
+  if (!import.meta.env.PUBLIC_SANITY_PROJECT_ID) {
+    throw new Error("Sanity content source is enabled, but PUBLIC_SANITY_PROJECT_ID is missing.");
+  }
+
+  if (!import.meta.env.PUBLIC_SANITY_DATASET) {
+    throw new Error("Sanity content source is enabled, but PUBLIC_SANITY_DATASET is missing.");
+  }
+};
+
 export const createSanityClient = () => {
+  assertSanityConfig();
+
   if (!hasSanityConfig()) {
     return undefined;
   }

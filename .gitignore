@@ -6,6 +6,7 @@ sanity/dist/
 sanity/.sanity/
 .astro/
 .migration-reports/
+assets-intake/
 .env
 .env.*
 !.env.example

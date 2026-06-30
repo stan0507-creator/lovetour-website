@@ -18,6 +18,14 @@ export const siteProfileQuery = (mode: "draft" | "published"): string => `
     contactHours,
     lineId,
     websiteUrl,
+    heroDesktopImage{
+      ...,
+      asset->{_ref, url, metadata{dimensions}}
+    },
+    heroMobileImage{
+      ...,
+      asset->{_ref, url, metadata{dimensions}}
+    },
     contentStatus
   }
 `;

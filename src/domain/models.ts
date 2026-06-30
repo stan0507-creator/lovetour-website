@@ -54,6 +54,10 @@ export interface SiteProfile {
   name: string;
   tagline: string;
   description: string;
+  heroImages?: {
+    desktop?: MediaAsset;
+    mobile?: MediaAsset;
+  };
   address?: string;
   contacts: ContactChannel[];
   checkInTime?: string;
@@ -70,6 +74,7 @@ export interface MediaAsset {
   alt: string;
   caption?: string;
   credit?: string;
+  objectPosition?: string;
   tags: MediaTag[];
   contentStatus?: ContentStatus;
   published?: boolean;

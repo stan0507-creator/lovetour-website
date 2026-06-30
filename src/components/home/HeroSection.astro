@@ -9,6 +9,10 @@ interface Props {
 }
 
 const { profile, media } = Astro.props;
+const desktopMedia = profile.heroImages?.desktop ?? media;
+const mobileMedia = profile.heroImages?.mobile ?? profile.heroImages?.desktop ?? media;
+const desktopObjectPosition = desktopMedia?.objectPosition ?? "center";
+const mobileObjectPosition = mobileMedia?.objectPosition ?? desktopObjectPosition;
 
 const hero = {
   eyebrow: profile.tagline,
@@ -25,7 +29,19 @@ const hero = {
 ---
 
 <section class="hero" aria-labelledby="hero-title">
-  {media && <img class="hero-image" src={media.src} alt={media.alt} />}
+  {
+    desktopMedia && (
+      <picture class="hero-picture">
+        {mobileMedia && <source media="(max-width: 560px)" srcset={mobileMedia.src} />}
+        <img
+          class="hero-image"
+          src={desktopMedia.src}
+          alt={desktopMedia.alt}
+          style={`--hero-position-desktop: ${desktopObjectPosition}; --hero-position-mobile: ${mobileObjectPosition};`}
+        />
+      </picture>
+    )
+  }
   <div class="hero-scrim"></div>
   <div class="container hero-content">
     <p class="eyebrow">{hero.eyebrow}</p>
@@ -49,6 +65,7 @@ const hero = {
     color: var(--color-surface);
   }
 
+  .hero-picture,
   .hero-image,
   .hero-scrim {
     position: absolute;
@@ -57,8 +74,13 @@ const hero = {
     height: 100%;
   }
 
+  .hero-picture {
+    display: block;
+  }
+
   .hero-image {
     object-fit: cover;
+    object-position: var(--hero-position-desktop, center);
   }
 
   .hero-scrim {
@@ -103,6 +125,10 @@ const hero = {
   @media (max-width: 560px) {
     .hero {
       min-height: 760px;
+    }
+
+    .hero-image {
+      object-position: var(--hero-position-mobile, center);
     }
 
     .hero-actions :global(.cta-link) {

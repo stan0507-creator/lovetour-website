@@ -6,6 +6,22 @@ export interface SanityImageRef {
   asset?: {
     _ref?: string;
     url?: string;
+    metadata?: {
+      dimensions?: {
+        width?: number;
+        height?: number;
+      };
+    };
+  };
+  crop?: {
+    top?: number;
+    bottom?: number;
+    left?: number;
+    right?: number;
+  };
+  hotspot?: {
+    x?: number;
+    y?: number;
   };
   alt?: string;
 }
@@ -22,6 +38,8 @@ export interface SanitySiteProfile {
   contactHours?: string;
   lineId?: string;
   websiteUrl?: string;
+  heroDesktopImage?: SanityImageRef;
+  heroMobileImage?: SanityImageRef;
   contentStatus: CmsContentStatus;
 }
 

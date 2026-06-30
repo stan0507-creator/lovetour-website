@@ -1,5 +1,6 @@
 import { defineField, defineType } from "sanity";
 import { contentStatusField } from "./contentStatus";
+import { imageWithAltField } from "./fields/imageFields";
 import { googleMapsUrlField, lineInquiryUrlField, socialLinkFields } from "./fields/linkFields";
 import { seoFields } from "./fields/seoFields";
 import { textSafetyValidation, urlSafetyValidation } from "./fields/validation";
@@ -10,6 +11,7 @@ export const siteProfile = defineType({
   type: "document",
   groups: [
     { name: "basic", title: "基本資料", default: true },
+    { name: "hero", title: "首頁圖片" },
     { name: "contact", title: "聯絡方式" },
     { name: "links", title: "連結設定" },
     { name: "seo", title: "SEO 設定" },
@@ -41,6 +43,22 @@ export const siteProfile = defineType({
       description: "網站主要標語。草稿可先測試，正式發布前不可含後台測試文字。",
       validation: textSafetyValidation,
     }),
+    {
+      ...imageWithAltField({
+        name: "heroDesktopImage",
+        title: "首頁桌機 Hero 圖",
+        description: "用於桌機與較寬螢幕的首頁首屏圖片。",
+      }),
+      group: "hero",
+    },
+    {
+      ...imageWithAltField({
+        name: "heroMobileImage",
+        title: "首頁手機 Hero 圖",
+        description: "用於手機版首頁首屏圖片。",
+      }),
+      group: "hero",
+    },
     defineField({
       name: "phone",
       title: "電話",

@@ -1,6 +1,12 @@
 import type { SiteProfile } from "../../domain/models";
 import type { FAQContent, PropertyContent, RoomPageContent } from "../types";
-import { createSanityClient, getCmsContentMode, getContentSource, hasSanityConfig } from "./client";
+import {
+  assertSanityConfig,
+  createSanityClient,
+  getCmsContentMode,
+  getContentSource,
+  hasSanityConfig,
+} from "./client";
 import { faqsQuery, propertiesQuery, roomsQuery, siteProfileQuery } from "./queries";
 import { mapFAQ, mapProperty, mapRoom, mapSiteProfile } from "./mapper";
 import type { SanityFAQ, SanityProperty, SanityRoom, SanitySiteProfile } from "./types";
@@ -12,8 +18,15 @@ export interface CmsPocSnapshot {
   faqs: FAQContent[];
 }
 
-export const shouldUseSanityContent = (): boolean =>
-  getContentSource() === "sanity" && hasSanityConfig();
+export const shouldUseSanityContent = (): boolean => {
+  if (getContentSource() !== "sanity") {
+    return false;
+  }
+
+  assertSanityConfig();
+
+  return hasSanityConfig();
+};
 
 export const getSanityPocSnapshot = async (): Promise<CmsPocSnapshot | undefined> => {
   if (!shouldUseSanityContent()) {
@@ -42,5 +55,5 @@ export const getSanityPocSnapshot = async (): Promise<CmsPocSnapshot | undefined
   };
 };
 
-export { createSanityClient, getCmsContentMode, getContentSource, hasSanityConfig };
+export { assertSanityConfig, createSanityClient, getCmsContentMode, getContentSource, hasSanityConfig };
 export type { SanityFAQ, SanityProperty, SanityRoom, SanitySiteProfile };
