@@ -1,15 +1,14 @@
 ---
 import CTASection from "../components/ui/CTASection.astro";
-import EmptyState from "../components/ui/EmptyState.astro";
 import PageHero from "../components/ui/PageHero.astro";
 import { getAboutPageContent, getMediaAssetById } from "../content";
 import MainLayout from "../layouts/MainLayout.astro";
 
 const page = getAboutPageContent();
-const heroImage = page?.seo.ogImageId ? getMediaAssetById(page.seo.ogImageId) : undefined;
+const heroImage = page?.seo.ogImageId ? getMediaAssetById(page.seo.ogImageId) : getMediaAssetById("media-brand-hero-sea");
 const seo = page?.seo ?? {
   title: "關於樂圖｜樂圖漫遊會館",
-  description: "樂圖漫遊會館關於頁內容尚未發布。",
+  description: "樂圖漫遊會館位於澎湖，提供 Love 館與 Tour 館住宿空間，重視乾淨、舒適、空間感與旅途中真正能好好休息的住宿體驗。",
   canonicalPath: "/about",
 };
 ---
@@ -49,11 +48,30 @@ const seo = page?.seo ?? {
         <CTASection title="想先確認適不適合你的旅程？" copy="可以先從房型、包棟或交通資訊看起，也可以直接到聯絡頁整理需求。" primaryLabel="聯絡我們" primaryHref="/contact" secondaryLabel="查看房型" secondaryHref="/rooms" />
       </>
     ) : (
-      <section class="section">
-        <div class="container">
-          <EmptyState title="內容尚未發布" copy="此頁內容目前仍在內部草稿階段。" />
-        </div>
-      </section>
+      <>
+        <PageHero
+          eyebrow="About"
+          title="關於樂圖漫遊會館"
+          copy="樂圖漫遊會館位於澎湖，Love 館與 Tour 館位於同一住宿空間。我們重視房間的乾淨整潔、空間舒適與睡眠品質，希望旅客在澎湖旅行一整天後，回到民宿能真正放鬆、好好休息。"
+          image={heroImage}
+          breadcrumbs={[{ label: "關於樂圖" }]}
+        />
+
+        <section class="section">
+          <div class="container story-grid">
+            <article>
+              <h2>旅途中真正能休息的地方</h2>
+              <p>我們希望旅客回到民宿時，可以卸下行李、整理心情，在乾淨且舒適的空間裡好好休息。</p>
+            </article>
+            <article>
+              <h2>保留溫度與彈性</h2>
+              <p>這裡不是制式化飯店，而是保留溫度與彈性的住宿空間。若有接送、租車、行程或多人同行需求，歡迎提前電話詢問。</p>
+            </article>
+          </div>
+        </section>
+
+        <CTASection title="想先確認適不適合你的旅程？" copy="可以先從房型、包棟或交通資訊看起，也可以直接到聯絡頁整理需求。" primaryLabel="聯絡我們" primaryHref="/contact" secondaryLabel="查看房型" secondaryHref="/rooms" />
+      </>
     )}
   </main>
 </MainLayout>

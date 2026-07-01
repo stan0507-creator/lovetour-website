@@ -11,12 +11,12 @@ const heroImage = getMediaAssetById("media-news-season");
 
 <MainLayout title="最新消息｜樂圖漫遊會館" description="樂圖漫遊會館最新消息列表。" canonicalPath="/news" ogImageId="media-news-season">
   <main>
-    <PageHero eyebrow="News" title="最新消息" copy="正式消息會在內容確認後再上架；目前暫無公告文章。" image={heroImage} breadcrumbs={[{ label: "最新消息" }]} />
+    <PageHero eyebrow="News" title="最新消息" copy="最新消息將依實際營運公告更新。" image={heroImage} breadcrumbs={[{ label: "最新消息" }]} />
     <section class="section section-muted">
       <div class="container news-grid">
         {articles.length > 0 ? articles.map((article) => (
           <NewsCard article={article} cover={article.coverImageId ? getMediaAssetById(article.coverImageId) : undefined} />
-        )) : <EmptyState title="目前沒有消息" copy="正式消息資料會在後續階段補齊。" />}
+        )) : <EmptyState title="目前沒有最新公告" copy="若有住宿、包棟或旅遊需求，歡迎直接來電詢問。" />}
       </div>
     </section>
   </main>

@@ -1,18 +1,17 @@
 ---
 import CTASection from "../components/ui/CTASection.astro";
-import EmptyState from "../components/ui/EmptyState.astro";
 import FAQAccordion from "../components/ui/FAQAccordion.astro";
 import PageHero from "../components/ui/PageHero.astro";
 import { getFAQs, getMediaAssetById, getPolicies, getVillaRentalContent } from "../content";
 import MainLayout from "../layouts/MainLayout.astro";
 
 const page = getVillaRentalContent();
-const heroImage = page?.seo.ogImageId ? getMediaAssetById(page.seo.ogImageId) : undefined;
+const heroImage = page?.seo.ogImageId ? getMediaAssetById(page.seo.ogImageId) : getMediaAssetById("media-brand-hero-sea");
 const villaFaqs = getFAQs().filter((faq) => page?.faqIds.includes(faq.id));
 const privatePolicies = getPolicies("private-stay");
 const seo = page?.seo ?? {
   title: "包棟方案｜樂圖漫遊會館",
-  description: "樂圖漫遊會館包棟內容尚未發布。",
+  description: "樂圖漫遊會館 Tour 館可受理多人同行與包棟需求，歡迎提前來電提供日期、人數與需求，由民宿協助確認安排。",
   canonicalPath: "/villa-rental",
 };
 ---
@@ -71,11 +70,36 @@ const seo = page?.seo ?? {
         <CTASection title="想詢問包棟日期與人數？" copy="包棟請先透過電話聯絡，提供預計入住日期、人數及需求，由民宿人員確認房況與相關細節。" primaryLabel="電話詢問" primaryHref="tel:+886905370600" secondaryLabel="查看房型" secondaryHref="/rooms" />
       </>
     ) : (
-      <section class="section">
-        <div class="container">
-          <EmptyState title="內容尚未發布" copy="此頁內容目前仍在內部草稿階段。" />
-        </div>
-      </section>
+      <>
+        <PageHero
+          eyebrow="Villa Rental"
+          title="包棟與多人同行詢問"
+          copy="Tour 館可受理多人同行與包棟需求。若是家庭、朋友或團體旅遊，歡迎提前來電提供入住日期、人數與需求，我們會依房況與實際安排協助確認是否合適。"
+          image={heroImage}
+          breadcrumbs={[{ label: "包棟方案" }]}
+        />
+
+        <section class="section">
+          <div class="container villa-grid">
+            <article class="villa-copy">
+              <p class="eyebrow">Private Stay</p>
+              <h2>先確認日期、人數與同行需求</h2>
+              <p>包棟需求會依實際房況、人數與住宿安排確認。第一版網站不提供線上包棟付款或即時房況查詢，請先透過電話聯絡。</p>
+            </article>
+            <aside class="villa-panel">
+              <h2>適合詢問的情境</h2>
+              <ul>
+                <li>家庭旅行</li>
+                <li>朋友同行</li>
+                <li>多人澎湖行程</li>
+                <li>希望共用公共空間的旅客</li>
+              </ul>
+            </aside>
+          </div>
+        </section>
+
+        <CTASection title="想詢問包棟日期與人數？" copy="請先來電提供預計入住日期、人數與需求，由民宿人員協助確認。" primaryLabel="電話詢問" primaryHref="tel:+886905370600" secondaryLabel="查看房型" secondaryHref="/rooms" />
+      </>
     )}
   </main>
 </MainLayout>

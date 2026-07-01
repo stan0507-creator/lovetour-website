@@ -9,45 +9,20 @@ const places = getNearbyPlaces();
 const heroImage = getMediaAssetById("media-brand-hero-sea");
 ---
 
-<MainLayout title="聯絡我們｜樂圖漫遊會館" description="樂圖漫遊會館聯絡方式，包含電話、LINE ID、Email、地址與住宿需求整理表單。" canonicalPath="/contact" ogImageId="media-brand-hero-sea">
+<MainLayout title="聯絡我們｜樂圖漫遊會館" description="樂圖漫遊會館聯絡方式，包含電話、LINE ID、Email、地址、Google Maps 與 Facebook。" canonicalPath="/contact" ogImageId="media-brand-hero-sea">
   <main>
     <PageHero eyebrow="Contact" title="聯絡我們" copy="如需確認房型、包棟、接送或租車行程協助，可先整理日期、人數與需求。" image={heroImage} breadcrumbs={[{ label: "聯絡我們" }]} />
 
     <section class="section">
       <div class="container contact-page-grid">
-        <div>
-          <p class="eyebrow">Inquiry Form</p>
+        <div class="contact-copy">
+          <p class="eyebrow">Contact</p>
           <h2 class="section-title">先整理你的住宿需求</h2>
-          <p class="section-copy">此表單目前只在本機草稿中協助整理欄位，不會送出資料，也不會建立訂房或後台紀錄。</p>
-          <form class="contact-form" data-draft-contact-form>
-            <label>
-              姓名
-              <input name="name" autocomplete="name" required />
-            </label>
-            <label>
-              電話
-              <input name="phone" autocomplete="tel" required />
-            </label>
-            <label>
-              Email
-              <input name="email" type="email" autocomplete="email" required />
-            </label>
-            <label>
-              入住日期
-              <input name="checkin" type="date" required />
-            </label>
-            <label>
-              人數
-              <input name="guests" type="number" min="1" required />
-            </label>
-            <label class="full">
-              詢問內容
-              <textarea name="message" rows="5" required></textarea>
-            </label>
-            <p class="form-note">此表單只做欄位檢查，不會送出資料。</p>
-            <button type="submit">檢查欄位</button>
-            <p class="form-message" data-form-message aria-live="polite"></p>
-          </form>
+          <p class="section-copy">若要詢問房型、入住日期、接送、租車或包棟需求，建議直接來電，或在 LINE 搜尋 @tour880 聯絡。</p>
+          <div class="contact-links" aria-label="社群與地圖連結">
+            <a href="https://maps.app.goo.gl/oyUcuErtRxpSVAvc7">Google Maps</a>
+            <a href="https://www.facebook.com/profile.php?id=100064056636849">Facebook</a>
+          </div>
         </div>
         <ContactSummary profile={profile} places={places} />
       </div>
@@ -62,66 +37,33 @@ const heroImage = getMediaAssetById("media-brand-hero-sea");
     align-items: start;
   }
 
-  .contact-form {
+  .contact-copy {
     display: grid;
     gap: var(--space-4);
-    margin-top: var(--space-8);
   }
 
-  label {
-    display: grid;
-    gap: var(--space-2);
-    color: var(--color-text-secondary);
-    font-weight: var(--font-weight-bold);
+  .contact-links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-3);
+    margin-top: var(--space-4);
   }
 
-  input,
-  textarea {
-    width: 100%;
+  .contact-links a {
+    display: inline-flex;
+    align-items: center;
+    min-height: 2.75rem;
     border: 1px solid var(--color-border);
-    border-radius: var(--radius-md);
-    padding: var(--space-3) var(--space-4);
-    color: var(--color-text-primary);
-    background: var(--color-surface);
-  }
-
-  textarea {
-    resize: vertical;
-  }
-
-  button {
-    justify-self: start;
-    min-height: 3rem;
-    border: 0;
     border-radius: var(--radius-pill);
-    padding: 0 var(--space-6);
-    color: var(--color-surface);
-    background: var(--color-primary);
+    padding: 0 var(--space-5);
+    color: var(--color-primary);
+    background: var(--color-surface);
     font-weight: var(--font-weight-black);
-    cursor: pointer;
-  }
-
-  .form-note,
-  .form-message {
-    margin: 0;
-    color: var(--color-text-secondary);
-    font-size: var(--font-size-sm);
-  }
-
-  .form-message {
-    color: var(--color-success);
-    font-weight: var(--font-weight-bold);
   }
 
   @media (min-width: 760px) {
-    .contact-form {
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-    }
-
-    .full,
-    .form-note,
-    .form-message {
-      grid-column: 1 / -1;
+    .contact-links {
+      max-width: 520px;
     }
   }
 
@@ -131,16 +73,3 @@ const heroImage = getMediaAssetById("media-brand-hero-sea");
     }
   }
 </style>
-
-<script>
-  const form = document.querySelector("[data-draft-contact-form]");
-
-  form?.addEventListener("submit", (event) => {
-    event.preventDefault();
-    const message = form.querySelector("[data-form-message]");
-
-    if (message instanceof HTMLElement) {
-      message.textContent = "欄位檢查已通過，但目前不會送出資料。";
-    }
-  });
-</script>
