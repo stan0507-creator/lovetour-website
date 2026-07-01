@@ -76,11 +76,11 @@ export const roomsQuery = (mode: "draft" | "published"): string => `
     notes,
     coverImage{
       ...,
-      asset->{_ref, url}
+      asset->{_ref, url, metadata{dimensions}}
     },
     gallery[]{
       ...,
-      asset->{_ref, url}
+      asset->{_ref, url, metadata{dimensions}}
     },
     displayOrder,
     "bookingUrl": coalesce(bookingUrl, odingUrl),

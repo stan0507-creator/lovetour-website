@@ -24,6 +24,7 @@ export const room = defineType({
       type: "reference",
       group: "basic",
       to: [{ type: "property" }],
+      weak: true,
       description: "選擇 Love 館或 Tour 館。正式發布前必須確認。",
       validation: (rule) => rule.required(),
     }),

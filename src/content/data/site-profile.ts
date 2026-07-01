@@ -3,6 +3,7 @@ import type { SiteProfileContent } from "../types";
 export const siteProfile = {
   name: "樂圖漫遊會館",
   tagline: "Lovetour HomeStay",
+  slogan: "我們打造的，不是房間，而是旅途中真正想回去休息的地",
   description:
     "樂圖漫遊會館位於澎湖，分為 Love 館與 Tour 館，共提供 12 間客房。我們重視房間的寬敞、整潔與睡眠舒適度，希望旅客在澎湖遊玩一整天後，回到民宿可以真正放鬆、好好休息。",
   address: "澎湖縣馬公市西衛里261-9號",

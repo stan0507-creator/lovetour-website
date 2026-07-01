@@ -171,11 +171,11 @@ export const mapRoom = (room: SanityRoom): RoomPageContent => {
     roomNumber: room.roomNumber,
     name: room.name,
     slug: room.slug?.current ?? room._id,
-    summary: room.summary || `${room.name}目前為 Sanity PoC 草稿房型。`,
+    summary: room.summary || room.name,
     description: room.description,
     capacity: {
       standard: room.recommendedGuests,
-      maximum: room.maximumGuests ?? room.recommendedGuests,
+      maximum: room.maximumGuests,
     },
     bedSetup: room.bedSetup,
     amenities: room.amenities ?? [],

@@ -24,7 +24,6 @@ const createRoom = (room: {
   summary: `建議 ${room.standardGuests} 位入住，配置 ${room.bedSetup}，適合在澎湖旅途中好好休息。`,
   capacity: {
     standard: room.standardGuests,
-    maximum: room.standardGuests,
   },
   bedSetup: room.bedSetup,
   amenities: [...commonAmenities, ...bathroomAmenities],

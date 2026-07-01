@@ -53,6 +53,7 @@ export interface ContactChannel {
 export interface SiteProfile {
   name: string;
   tagline: string;
+  slogan?: string;
   description: string;
   heroImages?: {
     desktop?: MediaAsset;
@@ -82,7 +83,7 @@ export interface MediaAsset {
 
 export interface Capacity {
   standard: number;
-  maximum: number;
+  maximum?: number;
 }
 
 export interface Room {
