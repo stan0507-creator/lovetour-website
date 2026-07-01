@@ -2,8 +2,10 @@ export const publishedFilter = 'contentStatus == "published"';
 
 export const previewFilter = 'contentStatus in ["draft", "verified", "published"]';
 
+export const pocDraftExclusionFilter = '!(_id match "drafts.poc-*") && !(_id match "poc-*")';
+
 export const contentStatusFilter = (mode: "draft" | "published"): string =>
-  mode === "published" ? publishedFilter : previewFilter;
+  `${mode === "published" ? publishedFilter : previewFilter} && ${pocDraftExclusionFilter}`;
 
 export const siteProfileQuery = (mode: "draft" | "published"): string => `
   *[_type == "siteProfile" && ${contentStatusFilter(mode)}] | order(_updatedAt desc)[0] {
