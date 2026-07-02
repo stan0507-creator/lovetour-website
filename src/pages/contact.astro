@@ -2,6 +2,13 @@
 import ContactSummary from "../components/ui/ContactSummary.astro";
 import PageHero from "../components/ui/PageHero.astro";
 import { getMediaAssetById, getNearbyPlaces, getSiteProfile } from "../content";
+import {
+  LEGAL_BUSINESS_INFO,
+  LINE_ADD_FRIEND_ALT,
+  LINE_ADD_FRIEND_IMAGE,
+  LINE_ID,
+  LINE_OFFICIAL_URL,
+} from "../content/data/business-info";
 import MainLayout from "../layouts/MainLayout.astro";
 
 const profile = getSiteProfile();
@@ -19,6 +26,19 @@ const heroImage = getMediaAssetById("media-brand-hero-sea");
           <p class="eyebrow">Contact</p>
           <h2 class="section-title">先整理你的住宿需求</h2>
           <p class="section-copy">若要詢問房型、入住日期、接送、租車或包棟需求，建議直接來電，或在 LINE 搜尋 @tour880 聯絡。</p>
+          <div class="line-contact">
+            <div>
+              <h3>LINE 聯絡</h3>
+              <p>LINE ID：{LINE_ID}</p>
+              <p>也可在 LINE 搜尋 {LINE_ID} 聯絡我們。</p>
+            </div>
+            <a class="line-add-friend" href={LINE_OFFICIAL_URL} target="_blank" rel="noopener noreferrer">
+              <img src={LINE_ADD_FRIEND_IMAGE} alt={LINE_ADD_FRIEND_ALT} loading="lazy" width="235" height="57" />
+            </a>
+          </div>
+          <ul class="legal-info" aria-label="合法民宿資訊">
+            {LEGAL_BUSINESS_INFO.map((item) => <li>{item}</li>)}
+          </ul>
           <div class="contact-links" aria-label="社群與地圖連結">
             <a href="https://maps.app.goo.gl/oyUcuErtRxpSVAvc7">Google Maps</a>
             <a href="https://www.facebook.com/profile.php?id=100064056636849">Facebook</a>
@@ -61,9 +81,62 @@ const heroImage = getMediaAssetById("media-brand-hero-sea");
     font-weight: var(--font-weight-black);
   }
 
+
+  .line-contact {
+    display: grid;
+    gap: var(--space-4);
+    align-items: center;
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    padding: var(--space-4);
+    background: var(--color-surface-muted);
+  }
+
+  .line-contact h3,
+  .line-contact p {
+    margin: 0;
+  }
+
+  .line-contact h3 {
+    font-size: var(--font-size-lg);
+    line-height: var(--line-height-tight);
+  }
+
+  .line-contact p {
+    color: var(--color-text-muted);
+  }
+
+  .line-add-friend {
+    display: inline-flex;
+    width: min(200px, 100%);
+  }
+
+  .line-add-friend img {
+    display: block;
+    width: 100%;
+    height: auto;
+    border-radius: var(--radius-sm);
+  }
+
+  .legal-info {
+    display: grid;
+    gap: var(--space-2);
+    margin: 0;
+    padding: 0;
+    color: var(--color-text-muted);
+    font-size: var(--font-size-sm);
+    font-weight: var(--font-weight-bold);
+    list-style: none;
+  }
+
   @media (min-width: 760px) {
     .contact-links {
       max-width: 520px;
+    }
+
+    .line-contact {
+      grid-template-columns: minmax(0, 1fr) auto;
+      max-width: 620px;
     }
   }
 

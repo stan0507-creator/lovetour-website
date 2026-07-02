@@ -1,5 +1,12 @@
 ---
 import type { SiteProfileContent } from "../../content/types";
+import {
+  LEGAL_BUSINESS_INFO,
+  LINE_ADD_FRIEND_ALT,
+  LINE_ADD_FRIEND_IMAGE,
+  LINE_ID,
+  LINE_OFFICIAL_URL,
+} from "../../content/data/business-info";
 import CtaLink from "../ui/CtaLink.astro";
 
 interface Props {
@@ -27,6 +34,13 @@ const footerLinks = [
       <p class="footer-kicker">Penghu Stay</p>
       <h2>{profile.name}</h2>
       <p>{profile.description}</p>
+      <ul class="footer-legal" aria-label="合法民宿與聯絡資訊">
+        {LEGAL_BUSINESS_INFO.map((item) => <li>{item}</li>)}
+        <li>LINE ID：{LINE_ID}</li>
+      </ul>
+      <a class="line-add-friend" href={LINE_OFFICIAL_URL} target="_blank" rel="noopener noreferrer">
+        <img src={LINE_ADD_FRIEND_IMAGE} alt={LINE_ADD_FRIEND_ALT} loading="lazy" width="235" height="57" />
+      </a>
     </div>
     <nav class="footer-nav" aria-label="頁尾導覽">
       {footerLinks.map((link) => (
@@ -68,6 +82,29 @@ const footerLinks = [
     max-width: 620px;
     margin: 0;
     color: color-mix(in srgb, var(--color-surface) 76%, transparent);
+  }
+
+  .footer-legal {
+    display: grid;
+    gap: var(--space-1);
+    margin: var(--space-5) 0 var(--space-4);
+    padding: 0;
+    color: color-mix(in srgb, var(--color-surface) 82%, transparent);
+    font-size: var(--font-size-sm);
+    font-weight: var(--font-weight-bold);
+    list-style: none;
+  }
+
+  .line-add-friend {
+    display: inline-flex;
+    width: min(180px, 100%);
+  }
+
+  .line-add-friend img {
+    display: block;
+    width: 100%;
+    height: auto;
+    border-radius: var(--radius-sm);
   }
 
   .footer-actions {
