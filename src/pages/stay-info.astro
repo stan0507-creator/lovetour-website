@@ -39,11 +39,16 @@ const infoSections = [
     copy:
       "多人同行、包棟、公共空間使用或其他特殊需求，歡迎提前來電詢問。我們會依房況、人數與現場安排協助確認合適方式。",
   },
-  {
-    title: "改期與取消",
-    copy:
-      "若需改期或取消，請盡早與民宿聯絡。我們會依實際訂房狀況、交通公告與相關規定協助處理。遇天候、船班或航班異動，請保留相關通知並與我們聯繫。",
-  },
+];
+
+const cancellationPolicyRows = [
+  ["預定住宿日前第 14 日以前", "退還定金 100%"],
+  ["預定住宿日前第 10 日至第 13 日", "退還定金 70%"],
+  ["預定住宿日前第 7 日至第 9 日", "退還定金 50%"],
+  ["預定住宿日前第 4 日至第 6 日", "退還定金 40%"],
+  ["預定住宿日前第 2 日至第 3 日", "退還定金 30%"],
+  ["預定住宿日前第 1 日", "退還定金 20%"],
+  ["預定住宿日當日或未通知", "得不退還定金"],
 ];
 ---
 
@@ -70,6 +75,32 @@ const infoSections = [
             <p>{item.copy}</p>
           </article>
         ))}
+        <article class="info-card cancellation-card">
+          <h2>改期與取消</h2>
+          <p>若需改期或取消，請盡早與我們聯絡。取消訂房時，定金退還比例依通知到達日距離預定住宿日之天數辦理。</p>
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th scope="col">通知取消時間</th>
+                  <th scope="col">定金退還比例</th>
+                </tr>
+              </thead>
+              <tbody>
+                {cancellationPolicyRows.map(([noticeTime, refundRate]) => (
+                  <tr>
+                    <td>{noticeTime}</td>
+                    <td>{refundRate}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+          <p>
+            如遇颱風、地震等不可抗力之天候因素，並依當地縣市政府公告或交通主管機關發布之停班停課、停航、停飛等狀況為準，可退還已付定金全額。
+          </p>
+          <p>若訂房來源為 OwlNest 或其他訂房平台，取消與退款流程仍需依該平台規則與實際訂單狀態辦理。</p>
+        </article>
       </div>
     </section>
 
@@ -131,6 +162,44 @@ const infoSections = [
     color: var(--color-text-secondary);
   }
 
+  .cancellation-card {
+    overflow: hidden;
+  }
+
+  .table-wrap {
+    overflow-x: auto;
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+  }
+
+  table {
+    width: 100%;
+    min-width: 520px;
+    border-collapse: collapse;
+  }
+
+  th,
+  td {
+    padding: var(--space-3) var(--space-4);
+    border-bottom: 1px solid var(--color-border);
+    text-align: left;
+    vertical-align: top;
+  }
+
+  th {
+    color: var(--color-text-primary);
+    background: var(--color-surface-muted);
+    font-weight: var(--font-weight-black);
+  }
+
+  td {
+    color: var(--color-text-secondary);
+  }
+
+  tr:last-child td {
+    border-bottom: 0;
+  }
+
   .contact-panel {
     display: grid;
     gap: var(--space-6);
@@ -163,6 +232,10 @@ const infoSections = [
   @media (min-width: 760px) {
     .info-grid {
       grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .cancellation-card {
+      grid-column: 1 / -1;
     }
 
     .contact-panel {
