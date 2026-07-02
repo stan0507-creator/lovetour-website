@@ -8,6 +8,9 @@ import MainLayout from "../layouts/MainLayout.astro";
 const profile = getSiteProfile();
 const places = getNearbyPlaces();
 const heroImage = getMediaAssetById("media-location-harbor");
+const address = "澎湖縣馬公市西衛里261-9號";
+const googleMapsUrl = "https://maps.app.goo.gl/oyUcuErtRxpSVAvc7";
+const googleMapsEmbedUrl = `https://www.google.com/maps?q=${encodeURIComponent(address)}&output=embed`;
 ---
 
 <MainLayout title="交通位置｜樂圖漫遊會館" description="樂圖漫遊會館交通位置與聯絡摘要，包含地址、機場港口接送說明與交通需求整理。" canonicalPath="/location" ogImageId="media-location-harbor">
@@ -18,12 +21,18 @@ const heroImage = getMediaAssetById("media-location-harbor");
       <div class="container location-grid">
         <div>
           <p class="eyebrow">Map</p>
-          <h2 class="section-title">地圖嵌入區</h2>
-          <p class="section-copy">Google Maps 商家分享連結尚未匯入正式內容層，現階段先保留地圖區塊位置。</p>
-          <div class="map-frame" aria-label="地圖嵌入區">
-            <strong>澎湖縣馬公市西衛里261-9號</strong>
-            <span>正式地圖連結確認後再更新</span>
+          <h2 class="section-title">Google Maps 地圖</h2>
+          <p class="section-copy">地址：{address}。Love 館與 Tour 館共用同一個 Google Maps 商家頁。</p>
+          <div class="map-frame" aria-label="樂圖漫遊會館 Google Maps 地圖">
+            <iframe
+              title="樂圖漫遊會館 Google Maps 地圖"
+              src={googleMapsEmbedUrl}
+              loading="lazy"
+              referrerpolicy="no-referrer-when-downgrade"
+              allowfullscreen
+            ></iframe>
           </div>
+          <a class="map-link" href={googleMapsUrl} target="_blank" rel="noopener noreferrer">在 Google Maps 開啟</a>
         </div>
         <ContactSummary profile={profile} places={places} />
       </div>
@@ -55,26 +64,27 @@ const heroImage = getMediaAssetById("media-location-harbor");
   }
 
   .map-frame {
-    display: grid;
+    overflow: hidden;
     min-height: 320px;
     margin-top: var(--space-8);
-    place-items: center;
     border: 1px solid var(--color-border);
     border-radius: var(--radius-lg);
-    color: var(--color-surface);
-    text-align: center;
-    background:
-      linear-gradient(135deg, rgba(15, 139, 141, 0.9), rgba(20, 33, 61, 0.9)),
-      var(--color-secondary);
+    background: var(--color-surface-muted);
+    box-shadow: var(--shadow-sm);
   }
 
-  .map-frame strong,
-  .map-frame span {
+  .map-frame iframe {
     display: block;
+    width: 100%;
+    min-height: 320px;
+    border: 0;
   }
 
-  .map-frame strong {
-    font-size: var(--font-size-3xl);
+  .map-link {
+    display: inline-flex;
+    margin-top: var(--space-4);
+    color: var(--color-primary);
+    font-weight: var(--font-weight-black);
   }
 
   .place-grid article {
