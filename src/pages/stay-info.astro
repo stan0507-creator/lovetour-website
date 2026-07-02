@@ -1,0 +1,172 @@
+---
+import CtaLink from "../components/ui/CtaLink.astro";
+import PageHero from "../components/ui/PageHero.astro";
+import { getMediaAssetById } from "../content";
+import { OWLNEST_BOOKING_URL } from "../content/data/booking";
+import {
+  LINE_ADD_FRIEND_ALT,
+  LINE_ADD_FRIEND_IMAGE,
+  LINE_ID,
+  LINE_OFFICIAL_URL,
+} from "../content/data/business-info";
+import MainLayout from "../layouts/MainLayout.astro";
+
+const heroImage = getMediaAssetById("media-brand-hero-sea");
+
+const infoSections = [
+  {
+    title: "入住與退房時間",
+    copy:
+      "入住時間為下午 4:00 以後，退房時間為上午 11:00 以前。若房間已整理完成，我們會依當日房務狀況協助安排；如需提前入住，建議出發前先來電確認。",
+  },
+  {
+    title: "訂房與付款確認",
+    copy:
+      "訂房、付款方式與保留房間時間，請以電話或官方聯絡方式確認。若需匯款資訊，請先與民宿聯絡確認，避免資料誤植或轉帳錯誤。",
+  },
+  {
+    title: "加人與加床",
+    copy:
+      "所有房型皆可提前詢問加床，實際可加床數量、費用及安排方式，依房型與入住當日狀況確認。",
+  },
+  {
+    title: "住宿規範",
+    copy:
+      "為維持住宿品質，請旅客共同保持環境整潔，夜間時段降低音量，並愛惜房內設備與公共空間。室內全面禁菸，如有特殊需求，請提前告知。",
+  },
+  {
+    title: "公共空間與多人同行",
+    copy:
+      "多人同行、包棟、公共空間使用或其他特殊需求，歡迎提前來電詢問。我們會依房況、人數與現場安排協助確認合適方式。",
+  },
+  {
+    title: "改期與取消",
+    copy:
+      "若需改期或取消，請盡早與民宿聯絡。我們會依實際訂房狀況、交通公告與相關規定協助處理。遇天候、船班或航班異動，請保留相關通知並與我們聯繫。",
+  },
+];
+---
+
+<MainLayout
+  title="入住資訊｜樂圖漫遊會館"
+  description="了解樂圖漫遊會館入住與退房時間、訂房確認、加床詢問、住宿規範與聯絡方式。實際安排請以電話確認為準。"
+  canonicalPath="/stay-info"
+  ogImageId="media-brand-hero-sea"
+>
+  <main>
+    <PageHero
+      eyebrow="Stay Info"
+      title="入住資訊"
+      copy="入住前可先確認時間、付款方式、加床需求與住宿規範；實際安排請以電話或官方聯絡方式確認為準。"
+      image={heroImage}
+      breadcrumbs={[{ label: "入住資訊" }]}
+    />
+
+    <section class="section">
+      <div class="container info-grid">
+        {infoSections.map((item) => (
+          <article class="info-card">
+            <h2>{item.title}</h2>
+            <p>{item.copy}</p>
+          </article>
+        ))}
+      </div>
+    </section>
+
+    <section class="section section-muted">
+      <div class="container contact-panel">
+        <div>
+          <p class="eyebrow">Confirm</p>
+          <h2 class="section-title">出發前先確認住宿需求</h2>
+          <p class="section-copy">
+            若要確認房型、入住日期、接送、加床或多人同行安排，建議直接來電；也可以先使用線上查詢查看日期與房價。
+          </p>
+          <p class="line-id">LINE ID：{LINE_ID}</p>
+        </div>
+
+        <div class="contact-actions">
+          <CtaLink label="電話詢問" href="tel:+886905370600" tone="primary" size="md" />
+          <CtaLink
+            label="查詢即時房價"
+            href={OWLNEST_BOOKING_URL}
+            target="_blank"
+            rel="noopener noreferrer"
+            variant="outline"
+            tone="primary"
+            size="md"
+          />
+          <a class="line-add-friend" href={LINE_OFFICIAL_URL} target="_blank" rel="noopener noreferrer">
+            <img src={LINE_ADD_FRIEND_IMAGE} alt={LINE_ADD_FRIEND_ALT} loading="lazy" width="235" height="57" />
+          </a>
+        </div>
+      </div>
+    </section>
+  </main>
+</MainLayout>
+
+<style>
+  .info-grid {
+    display: grid;
+    gap: var(--space-5);
+  }
+
+  .info-card {
+    display: grid;
+    gap: var(--space-3);
+    padding: var(--space-6);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    background: var(--color-surface);
+  }
+
+  .info-card h2 {
+    margin: 0;
+    font-size: var(--font-size-xl);
+    line-height: var(--line-height-heading);
+  }
+
+  .info-card p,
+  .line-id {
+    margin: 0;
+    color: var(--color-text-secondary);
+  }
+
+  .contact-panel {
+    display: grid;
+    gap: var(--space-6);
+    align-items: center;
+    padding: var(--space-6);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    background: var(--color-surface);
+  }
+
+  .contact-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-3);
+    align-items: center;
+  }
+
+  .line-add-friend {
+    display: inline-flex;
+    width: min(200px, 100%);
+  }
+
+  .line-add-friend img {
+    display: block;
+    width: 100%;
+    height: auto;
+    border-radius: var(--radius-sm);
+  }
+
+  @media (min-width: 760px) {
+    .info-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .contact-panel {
+      grid-template-columns: minmax(0, 1fr) auto;
+    }
+  }
+</style>
