@@ -1,166 +1,282 @@
 ---
 import CTASection from "../components/ui/CTASection.astro";
-import FAQAccordion from "../components/ui/FAQAccordion.astro";
-import PageHero from "../components/ui/PageHero.astro";
-import { getFAQs, getMediaAssetById, getPolicies, getVillaRentalContent } from "../content";
+import CtaLink from "../components/ui/CtaLink.astro";
+import RoomCard from "../components/ui/RoomCard.astro";
+import { getContentSnapshotFromSource } from "../content";
+import { OWLNEST_BOOKING_URL, ROOM_RATE_NOTICE } from "../content/data/booking";
 import MainLayout from "../layouts/MainLayout.astro";
 
-const page = getVillaRentalContent();
-const heroImage = page?.seo.ogImageId ? getMediaAssetById(page.seo.ogImageId) : getMediaAssetById("media-brand-hero-sea");
-const villaFaqs = getFAQs().filter((faq) => page?.faqIds.includes(faq.id));
-const privatePolicies = getPolicies("private-stay");
-const seo = page?.seo ?? {
-  title: "包棟方案｜樂圖漫遊會館",
-  description: "樂圖漫遊會館 Tour 館可受理多人同行與包棟需求，歡迎提前來電提供日期、人數與需求，由民宿協助確認安排。",
-  canonicalPath: "/villa-rental",
+const content = await getContentSnapshotFromSource();
+const tourRooms = content.rooms
+  .filter((room) => room.propertyId === "property-tour" || room.id.startsWith("room-tour-"))
+  .sort((a, b) => (a.displayOrder ?? 0) - (b.displayOrder ?? 0));
+
+const heroImage = {
+  src: "/images/villa-rental/tour-living-room-main.webp",
+  alt: "樂圖漫遊會館 Tour 館公共空間",
 };
+
+const publicSpaceImages = [
+  {
+    src: "/images/villa-rental/tour-living-room-dining.webp",
+    alt: "樂圖漫遊會館 Tour 館餐桌與公共空間",
+    label: "餐桌與公共空間",
+  },
+  {
+    src: "/images/villa-rental/tour-living-room-kitchen.webp",
+    alt: "樂圖漫遊會館 Tour 館廚房與設備區",
+    label: "廚房與設備區",
+  },
+  {
+    src: "/images/villa-rental/tour-living-room-sofa.webp",
+    alt: "樂圖漫遊會館 Tour 館沙發休憩區",
+    label: "沙發休憩區",
+  },
+  {
+    src: "/images/villa-rental/tour-living-room-tv.webp",
+    alt: "樂圖漫遊會館 Tour 館客廳電視牆",
+    label: "客廳電視牆",
+  },
+  {
+    src: "/images/villa-rental/tour-living-room-detail.webp",
+    alt: "樂圖漫遊會館 Tour 館公共空間細節",
+    label: "公共空間細節",
+  },
+];
 ---
 
-<MainLayout title={seo.title} description={seo.description} canonicalPath={seo.canonicalPath} ogImageId={page?.seo.ogImageId}>
+<MainLayout
+  title="Tour 館｜多人同行住宿｜樂圖漫遊會館"
+  description="Tour 館適合家庭、朋友與多人澎湖旅行。包棟、多人入住與特殊需求歡迎提前來電，由樂圖漫遊會館依房況協助確認。"
+  canonicalPath="/villa-rental"
+>
   <main>
-    {page ? (
-      <>
-        <PageHero eyebrow="Villa Rental" title={page.hero.title} copy={page.hero.copy} image={heroImage} breadcrumbs={[{ label: "包棟方案" }]} />
+    <section class="villa-hero">
+      <img src={heroImage.src} alt={heroImage.alt} class="villa-hero-image" />
+      <div class="container villa-hero-content">
+        <p class="eyebrow">Tour Building</p>
+        <h1>Tour 館｜多人同行住宿</h1>
+        <p>
+          Tour 館適合家庭、朋友與多人澎湖旅行。若有包棟、多人入住或特殊需求，歡迎提前來電，我們會依房況協助安排。
+        </p>
+        <div class="hero-actions">
+          <CtaLink label="查詢即時房價" href={OWLNEST_BOOKING_URL} target="_blank" rel="noopener noreferrer" tone="accent" size="lg" />
+          <CtaLink label="電話詢問" href="tel:+886905370600" variant="outline" tone="primary" size="lg" />
+        </div>
+      </div>
+    </section>
 
-        <section class="section">
-          <div class="container villa-grid">
-            <article class="villa-copy">
-              <p class="eyebrow">Tour 館包棟定位</p>
-              <h2>{page.positioning.title}</h2>
-              <p>{page.positioning.copy}</p>
-              <strong>{page.capacityLabel}</strong>
-            </article>
-            <aside class="villa-panel">
-              <h2>適合旅人</h2>
-              <ul>
-                <li>家庭旅行</li>
-                <li>朋友同行</li>
-                <li>多人澎湖行程</li>
-                <li>想共用公共空間的旅人</li>
-              </ul>
-            </aside>
+    <section class="section">
+      <div class="container intro-grid">
+        <article class="intro-copy">
+          <p class="eyebrow">Private Stay</p>
+          <h2>多人同行與包棟詢問</h2>
+          <p>
+            Tour 館可受理多人同行與包棟需求。若是家庭、朋友或團體旅遊，歡迎提前來電提供入住日期、人數與需求，我們會依房況與實際安排協助確認是否合適。
+          </p>
+          <p>實際可入住人數、房型安排與房價，請以電話或線上查詢確認為準。</p>
+        </article>
+        <aside class="notice-panel">
+          <h2>房價與訂房提醒</h2>
+          <p>{ROOM_RATE_NOTICE}</p>
+          <div class="panel-actions">
+            <CtaLink label="查詢即時房價" href={OWLNEST_BOOKING_URL} target="_blank" rel="noopener noreferrer" tone="accent" size="md" />
+            <CtaLink label="電話詢問" href="tel:+886905370600" variant="outline" tone="primary" size="md" />
           </div>
-        </section>
+        </aside>
+      </div>
+    </section>
 
-        <section class="section section-muted">
-          <div class="container amenity-grid">
-            <article>
-              <h2>公共空間</h2>
-              <ul>{page.publicSpaces.map((space) => <li>{space}</li>)}</ul>
-            </article>
-            <article>
-              <h2>包棟設備與服務</h2>
-              <ul>{page.amenities.map((amenity) => <li>{amenity}</li>)}</ul>
-            </article>
-            <article>
-              <h2>服務提醒</h2>
-              <ul>{page.serviceNotes.map((note) => <li>{note}</li>)}</ul>
-            </article>
-          </div>
-        </section>
+    <section class="section section-muted">
+      <div class="container section-heading">
+        <p class="eyebrow">Shared Space</p>
+        <h2>Tour 館公共空間</h2>
+        <p>多人同行時，可以提前詢問公共空間使用與相關安排。實際使用方式依現場規範與入住狀況確認。</p>
+      </div>
+      <div class="container public-space-grid">
+        {publicSpaceImages.map((image) => (
+          <figure>
+            <img src={image.src} alt={image.alt} loading="lazy" />
+            <figcaption>{image.label}</figcaption>
+          </figure>
+        ))}
+      </div>
+    </section>
 
-        <section class="section section-muted">
-          <div class="container">
-            <p class="eyebrow">FAQ</p>
-            <h2 class="section-title">包棟常見問題</h2>
-            <FAQAccordion faqs={villaFaqs} policies={privatePolicies} />
-          </div>
-        </section>
+    <section class="section">
+      <div class="container section-heading">
+        <p class="eyebrow">Tour Rooms</p>
+        <h2>Tour 館 6 間房型</h2>
+        <p>可依同行人數與旅遊需求查看各房型。第一版資訊以建議入住人數與電話確認為準。</p>
+      </div>
+      <div class="container tour-room-grid">
+        {tourRooms.map((room) => <RoomCard room={room} />)}
+      </div>
+    </section>
 
-        <CTASection title="想詢問包棟日期與人數？" copy="包棟請先透過電話聯絡，提供預計入住日期、人數及需求，由民宿人員確認房況與相關細節。" primaryLabel="電話詢問" primaryHref="tel:+886905370600" secondaryLabel="查看房型" secondaryHref="/rooms" />
-      </>
-    ) : (
-      <>
-        <PageHero
-          eyebrow="Villa Rental"
-          title="包棟與多人同行詢問"
-          copy="Tour 館可受理多人同行與包棟需求。若是家庭、朋友或團體旅遊，歡迎提前來電提供入住日期、人數與需求，我們會依房況與實際安排協助確認是否合適。"
-          image={heroImage}
-          breadcrumbs={[{ label: "包棟方案" }]}
-        />
-
-        <section class="section">
-          <div class="container villa-grid">
-            <article class="villa-copy">
-              <p class="eyebrow">Private Stay</p>
-              <h2>先確認日期、人數與同行需求</h2>
-              <p>包棟需求會依實際房況、人數與住宿安排確認。第一版網站不提供線上包棟付款或即時房況查詢，請先透過電話聯絡。</p>
-            </article>
-            <aside class="villa-panel">
-              <h2>適合詢問的情境</h2>
-              <ul>
-                <li>家庭旅行</li>
-                <li>朋友同行</li>
-                <li>多人澎湖行程</li>
-                <li>希望共用公共空間的旅客</li>
-              </ul>
-            </aside>
-          </div>
-        </section>
-
-        <CTASection title="想詢問包棟日期與人數？" copy="請先來電提供預計入住日期、人數與需求，由民宿人員協助確認。" primaryLabel="電話詢問" primaryHref="tel:+886905370600" secondaryLabel="查看房型" secondaryHref="/rooms" />
-      </>
-    )}
+    <CTASection
+      title="想確認 Tour 館日期與安排？"
+      copy={`${ROOM_RATE_NOTICE} 若有包棟、多人入住、接送或加床需求，仍建議來電確認。`}
+      primaryLabel="查詢即時房價"
+      primaryHref={OWLNEST_BOOKING_URL}
+      primaryTarget="_blank"
+      primaryRel="noopener noreferrer"
+      secondaryLabel="電話詢問"
+      secondaryHref="tel:+886905370600"
+    />
   </main>
 </MainLayout>
 
 <style>
-  .villa-grid,
-  .amenity-grid {
+  .villa-hero {
+    position: relative;
+    display: grid;
+    min-height: min(760px, 92vh);
+    align-items: end;
+    overflow: hidden;
+    color: var(--color-surface);
+    background: var(--color-secondary);
+  }
+
+  .villa-hero::after {
+    position: absolute;
+    inset: 0;
+    content: "";
+    background:
+      linear-gradient(90deg, color-mix(in srgb, var(--color-secondary) 72%, transparent) 0%, transparent 68%),
+      linear-gradient(0deg, color-mix(in srgb, var(--color-secondary) 48%, transparent) 0%, transparent 54%);
+  }
+
+  .villa-hero-image {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .villa-hero-content {
+    position: relative;
+    z-index: 1;
+    display: grid;
+    max-width: 780px;
+    gap: var(--space-5);
+    padding-block: var(--space-20) var(--space-16);
+  }
+
+  .villa-hero h1 {
+    margin: 0;
+    font-size: clamp(var(--font-size-4xl), 8vw, var(--font-size-6xl));
+    line-height: var(--line-height-tight);
+  }
+
+  .villa-hero p {
+    max-width: 660px;
+    margin: 0;
+    color: color-mix(in srgb, var(--color-surface) 84%, transparent);
+    font-size: var(--font-size-lg);
+  }
+
+  .hero-actions,
+  .panel-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-3);
+  }
+
+  .intro-grid {
     display: grid;
     gap: var(--space-5);
   }
 
-  .villa-copy,
-  .villa-panel,
-  .amenity-grid article,
-  .room-summary {
-    padding: var(--space-6);
+  .intro-copy,
+  .notice-panel,
+  .public-space-grid figure {
     border: 1px solid var(--color-border);
     border-radius: var(--radius-lg);
     background: var(--color-surface);
+    box-shadow: var(--shadow-sm);
+  }
+
+  .intro-copy,
+  .notice-panel {
+    padding: var(--space-6);
   }
 
   h2 {
     margin: 0 0 var(--space-4);
+    font-size: clamp(var(--font-size-2xl), 3vw, var(--font-size-4xl));
+    line-height: var(--line-height-heading);
   }
 
   p {
-    margin: 0 0 var(--space-5);
-    color: var(--color-text-secondary);
-  }
-
-  strong {
-    color: var(--color-primary);
-  }
-
-  ul {
-    display: grid;
-    gap: var(--space-3);
-    padding-left: var(--space-5);
     margin: 0;
     color: var(--color-text-secondary);
   }
 
-  .cluster {
-    margin-top: var(--space-5);
+  .intro-copy p + p {
+    margin-top: var(--space-4);
   }
 
-  .cluster span {
-    padding: var(--space-2) var(--space-3);
-    border: 1px solid var(--color-border);
-    border-radius: var(--radius-pill);
+  .notice-panel {
+    display: grid;
+    gap: var(--space-4);
+    align-content: start;
+  }
+
+  .section-heading {
+    display: grid;
+    gap: var(--space-3);
+    max-width: 780px;
+    margin-bottom: var(--space-6);
+  }
+
+  .section-heading h2 {
+    margin-bottom: 0;
+  }
+
+  .public-space-grid,
+  .tour-room-grid {
+    display: grid;
+    gap: var(--space-5);
+  }
+
+  .public-space-grid figure {
+    overflow: hidden;
+    margin: 0;
+  }
+
+  .public-space-grid img {
+    width: 100%;
+    aspect-ratio: 3 / 2;
+    object-fit: cover;
+  }
+
+  .public-space-grid figcaption {
+    padding: var(--space-4) var(--space-5);
     color: var(--color-text-secondary);
-    background: var(--color-background);
+    font-weight: var(--font-weight-black);
+  }
+
+  @media (min-width: 720px) {
+    .public-space-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
   }
 
   @media (min-width: 820px) {
-    .villa-grid {
-      grid-template-columns: 1fr 0.42fr;
+    .intro-grid {
+      grid-template-columns: minmax(0, 1fr) minmax(320px, 0.42fr);
     }
 
-    .amenity-grid {
+    .tour-room-grid {
       grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+  }
+
+  @media (min-width: 1080px) {
+    .public-space-grid {
+      grid-template-columns: repeat(5, minmax(0, 1fr));
     }
   }
 </style>
