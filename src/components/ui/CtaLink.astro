@@ -10,10 +10,18 @@ const {
   tone = "primary",
   size = "md",
   ariaLabel,
+  target,
+  rel,
 } = Astro.props;
 ---
 
-<a class:list={["cta-link", `cta-link--${variant}`, `cta-link--${tone}`, `cta-link--${size}`]} href={href} aria-label={ariaLabel}>
+<a
+  class:list={["cta-link", `cta-link--${variant}`, `cta-link--${tone}`, `cta-link--${size}`]}
+  href={href}
+  aria-label={ariaLabel}
+  target={target}
+  rel={rel}
+>
   <span>{label}</span>
 </a>
 

@@ -1,8 +1,10 @@
 ---
 import CTASection from "../../components/ui/CTASection.astro";
+import CtaLink from "../../components/ui/CtaLink.astro";
 import PageHero from "../../components/ui/PageHero.astro";
 import RoomCard from "../../components/ui/RoomCard.astro";
 import { getContentSnapshotFromSource, getMediaAssetById } from "../../content";
+import { OWLNEST_BOOKING_URL, ROOM_RATE_NOTICE } from "../../content/data/booking";
 import MainLayout from "../../layouts/MainLayout.astro";
 
 const content = await getContentSnapshotFromSource();
@@ -15,6 +17,12 @@ const heroImage = getMediaAssetById("media-room-family");
     <PageHero eyebrow="Rooms" title="房型列表" copy="樂圖漫遊會館共有 12 間房型，提供雙人、三人與四人住宿選擇。實際入住安排、加床與訂房細節，請以電話確認為準。" image={heroImage} breadcrumbs={[{ label: "房型列表" }]} />
 
     <section class="section section-muted">
+      <div class="container">
+        <div class="rate-notice">
+          <p>{ROOM_RATE_NOTICE}</p>
+          <CtaLink label="查詢即時房價" href={OWLNEST_BOOKING_URL} target="_blank" rel="noopener noreferrer" tone="accent" size="md" />
+        </div>
+      </div>
       <div class="container room-grid">
         {rooms.map((room) => <RoomCard room={room} />)}
       </div>
@@ -25,9 +33,31 @@ const heroImage = getMediaAssetById("media-room-family");
 </MainLayout>
 
 <style>
+  .rate-notice {
+    display: grid;
+    gap: var(--space-4);
+    align-items: center;
+    margin-bottom: var(--space-6);
+    padding: var(--space-5);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    background: var(--color-surface);
+  }
+
+  .rate-notice p {
+    margin: 0;
+    color: var(--color-text-secondary);
+  }
+
   .room-grid {
     display: grid;
     gap: var(--space-5);
+  }
+
+  @media (min-width: 720px) {
+    .rate-notice {
+      grid-template-columns: minmax(0, 1fr) auto;
+    }
   }
 
   @media (min-width: 820px) {

@@ -1,7 +1,9 @@
 ---
 import ContactSummary from "../components/ui/ContactSummary.astro";
+import CtaLink from "../components/ui/CtaLink.astro";
 import PageHero from "../components/ui/PageHero.astro";
 import { getMediaAssetById, getNearbyPlaces, getSiteProfile } from "../content";
+import { OWLNEST_BOOKING_URL } from "../content/data/booking";
 import {
   LEGAL_BUSINESS_INFO,
   LINE_ADD_FRIEND_ALT,
@@ -26,6 +28,7 @@ const heroImage = getMediaAssetById("media-brand-hero-sea");
           <p class="eyebrow">Contact</p>
           <h2 class="section-title">先整理你的住宿需求</h2>
           <p class="section-copy">若要詢問房型、入住日期、接送、租車或包棟需求，建議直接來電，或在 LINE 搜尋 @tour880 聯絡。</p>
+          <p class="section-copy">若想先查詢日期與房價，可使用線上查詢；若有接送、包棟或加床需求，仍建議來電確認。</p>
           <div class="line-contact">
             <div>
               <h3>LINE 聯絡</h3>
@@ -40,6 +43,7 @@ const heroImage = getMediaAssetById("media-brand-hero-sea");
             {LEGAL_BUSINESS_INFO.map((item) => <li>{item}</li>)}
           </ul>
           <div class="contact-links" aria-label="社群與地圖連結">
+            <CtaLink label="查詢即時房價" href={OWLNEST_BOOKING_URL} target="_blank" rel="noopener noreferrer" tone="accent" size="md" />
             <a href="https://maps.app.goo.gl/oyUcuErtRxpSVAvc7">Google Maps</a>
             <a href="https://www.facebook.com/profile.php?id=100064056636849">Facebook</a>
           </div>
@@ -80,7 +84,6 @@ const heroImage = getMediaAssetById("media-brand-hero-sea");
     background: var(--color-surface);
     font-weight: var(--font-weight-black);
   }
-
 
   .line-contact {
     display: grid;

@@ -1,5 +1,6 @@
 ---
 import type { MediaAssetContent, SiteProfileContent } from "../../content/types";
+import { OWLNEST_BOOKING_URL } from "../../content/data/booking";
 import type { HeroContract } from "../../design-system/components";
 import CtaLink from "../ui/CtaLink.astro";
 
@@ -21,8 +22,8 @@ const hero = {
     "在澎湖的海風裡，把白天交給旅行，把夜晚交給好好休息。樂圖漫遊會館重視寬敞、整潔與睡眠舒適度，也用親切且彈性的服務陪旅客把行程安排得更順。",
   mediaAssetId: media?.id,
   actions: [
-    { label: "立即訂房", href: "#contact", variant: "primary" },
-    { label: "加 LINE 詢問", href: "#contact", variant: "secondary" },
+    { label: "電話詢問", href: "tel:+886905370600", variant: "primary" },
+    { label: "查詢即時房價", href: OWLNEST_BOOKING_URL, variant: "secondary" },
     { label: "查看房型", href: "#rooms", variant: "secondary" },
   ],
 } satisfies HeroContract;
@@ -49,7 +50,7 @@ const hero = {
     <p>{hero.summary}</p>
     <div class="hero-actions">
       <CtaLink label="電話詢問" href="tel:+886905370600" tone="accent" size="lg" />
-      <CtaLink label="聯絡我們" href="/contact" variant="outline" tone="primary" size="lg" />
+      <CtaLink label="查詢即時房價" href={OWLNEST_BOOKING_URL} target="_blank" rel="noopener noreferrer" variant="outline" tone="primary" size="lg" />
       <CtaLink label="查看房型" href="/rooms" variant="text" tone="primary" size="lg" />
     </div>
   </div>

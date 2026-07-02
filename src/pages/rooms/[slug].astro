@@ -2,6 +2,7 @@
 import CTASection from "../../components/ui/CTASection.astro";
 import PageHero from "../../components/ui/PageHero.astro";
 import { getContentSnapshotFromSource } from "../../content";
+import { OWLNEST_BOOKING_URL, ROOM_RATE_NOTICE } from "../../content/data/booking";
 import MainLayout from "../../layouts/MainLayout.astro";
 
 export async function getStaticPaths() {
@@ -66,7 +67,16 @@ const extraBedNotice = "所有房型皆可提前詢問加床，實際可加床�
       </div>
     </section>
 
-    <CTASection title="想詢問這個房型？" copy="可以先提供入住日期、人數與房型需求，由民宿人員協助確認。" primaryLabel="電話詢問" primaryHref="tel:+886905370600" secondaryLabel="聯絡我們" secondaryHref="/contact" />
+    <CTASection
+      title="想查詢日期與房價？"
+      copy={`${ROOM_RATE_NOTICE} 如有加床、接送或其他需求，仍建議來電確認。`}
+      primaryLabel="查詢即時房價"
+      primaryHref={OWLNEST_BOOKING_URL}
+      primaryTarget="_blank"
+      primaryRel="noopener noreferrer"
+      secondaryLabel="電話詢問"
+      secondaryHref="tel:+886905370600"
+    />
 
     <section class="section">
       <div class="container">

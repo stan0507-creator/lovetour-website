@@ -6,17 +6,25 @@ interface Props {
   copy: string;
   primaryLabel?: string;
   primaryHref?: string;
+  primaryRel?: string;
+  primaryTarget?: "_blank" | "_self" | "_parent" | "_top";
   secondaryLabel?: string;
   secondaryHref?: string;
+  secondaryRel?: string;
+  secondaryTarget?: "_blank" | "_self" | "_parent" | "_top";
 }
 
 const {
   title,
   copy,
-  primaryLabel = "加 LINE 詢問",
+  primaryLabel = "聯絡我們",
   primaryHref = "/contact",
+  primaryRel,
+  primaryTarget,
   secondaryLabel = "查看房型",
   secondaryHref = "/rooms",
+  secondaryRel,
+  secondaryTarget,
 } = Astro.props;
 ---
 
@@ -28,8 +36,8 @@ const {
       <p>{copy}</p>
     </div>
     <div class="cta-actions">
-      <CtaLink label={primaryLabel} href={primaryHref} tone="accent" size="md" />
-      <CtaLink label={secondaryLabel} href={secondaryHref} variant="outline" tone="primary" size="md" />
+      <CtaLink label={primaryLabel} href={primaryHref} target={primaryTarget} rel={primaryRel} tone="accent" size="md" />
+      <CtaLink label={secondaryLabel} href={secondaryHref} target={secondaryTarget} rel={secondaryRel} variant="outline" tone="primary" size="md" />
     </div>
   </div>
 </section>

@@ -21,6 +21,8 @@ export interface InteractiveComponentContract extends BaseComponentContract {
   ariaLabel?: string;
   disabled?: boolean;
   href?: string;
+  rel?: string;
+  target?: "_blank" | "_self" | "_parent" | "_top";
 }
 
 export interface IconContract {
