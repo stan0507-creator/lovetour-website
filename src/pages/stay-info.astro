@@ -9,6 +9,7 @@ import {
   LINE_ID,
   LINE_OFFICIAL_URL,
 } from "../content/data/business-info";
+import { ELEVATOR_FACILITY_COPY } from "../content/data/facilities";
 import MainLayout from "../layouts/MainLayout.astro";
 
 const heroImage = getMediaAssetById("media-brand-hero-sea");
@@ -28,6 +29,10 @@ const infoSections = [
     title: "加人與加床",
     copy:
       "所有房型皆可提前詢問加床，實際可加床數量、費用及安排方式，依房型與入住當日狀況確認。",
+  },
+  {
+    title: "電梯與行李",
+    copy: ELEVATOR_FACILITY_COPY.stayInfo,
   },
   {
     title: "住宿規範",

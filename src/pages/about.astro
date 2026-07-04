@@ -2,6 +2,7 @@
 import CTASection from "../components/ui/CTASection.astro";
 import PageHero from "../components/ui/PageHero.astro";
 import { getAboutPageContent, getMediaAssetById } from "../content";
+import { ELEVATOR_FACILITY_COPY } from "../content/data/facilities";
 import MainLayout from "../layouts/MainLayout.astro";
 
 const page = getAboutPageContent();
@@ -10,6 +11,10 @@ const seo = page?.seo ?? {
   title: "關於樂圖｜樂圖漫遊會館",
   description: "樂圖漫遊會館位於澎湖，提供 Love 館與 Tour 館住宿空間，重視乾淨、舒適、空間感與旅途中真正能好好休息的住宿體驗。",
   canonicalPath: "/about",
+};
+const elevatorStory = {
+  title: "行李與同行需求",
+  copy: ELEVATOR_FACILITY_COPY.detail,
 };
 ---
 
@@ -21,7 +26,7 @@ const seo = page?.seo ?? {
 
         <section class="section">
           <div class="container story-grid">
-            {page.story.map((item) => (
+            {[...page.story, elevatorStory].map((item) => (
               <article>
                 <h2>{item.title}</h2>
                 <p>{item.copy}</p>
@@ -66,6 +71,10 @@ const seo = page?.seo ?? {
             <article>
               <h2>保留溫度與彈性</h2>
               <p>這裡不是制式化飯店，而是保留溫度與彈性的住宿空間。若有接送、租車、行程或多人同行需求，歡迎提前電話詢問。</p>
+            </article>
+            <article>
+              <h2>{elevatorStory.title}</h2>
+              <p>{elevatorStory.copy}</p>
             </article>
           </div>
         </section>

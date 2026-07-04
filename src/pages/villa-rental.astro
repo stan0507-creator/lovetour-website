@@ -4,6 +4,7 @@ import CtaLink from "../components/ui/CtaLink.astro";
 import RoomCard from "../components/ui/RoomCard.astro";
 import { getContentSnapshotFromSource } from "../content";
 import { OWLNEST_BOOKING_URL, ROOM_RATE_NOTICE } from "../content/data/booking";
+import { ELEVATOR_FACILITY_COPY } from "../content/data/facilities";
 import MainLayout from "../layouts/MainLayout.astro";
 
 const content = await getContentSnapshotFromSource();
@@ -74,6 +75,7 @@ const publicSpaceImages = [
           <p>
             Tour 館可受理多人同行與包棟需求。若是家庭、朋友或團體旅遊，歡迎提前來電提供入住日期、人數與需求，我們會依房況與實際安排協助確認是否合適。
           </p>
+          <p>{ELEVATOR_FACILITY_COPY.tour}</p>
           <p>實際可入住人數、房型安排與房價，請以電話或線上查詢確認為準。</p>
         </article>
         <aside class="notice-panel">

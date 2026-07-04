@@ -2,10 +2,19 @@
 import FAQAccordion from "../components/ui/FAQAccordion.astro";
 import PageHero from "../components/ui/PageHero.astro";
 import { getContentSnapshotFromSource, getMediaAssetById, getPolicies } from "../content";
+import { ELEVATOR_FACILITY_COPY } from "../content/data/facilities";
+import type { FAQContent } from "../content/types";
 import MainLayout from "../layouts/MainLayout.astro";
 
 const content = await getContentSnapshotFromSource();
-const faqs = content.faqs;
+const elevatorFaq = {
+  id: "faq-elevator",
+  question: "民宿有電梯嗎？",
+  answer: ELEVATOR_FACILITY_COPY.faqAnswer,
+  category: "location",
+  priority: 70,
+} satisfies FAQContent;
+const faqs = [...content.faqs, elevatorFaq];
 const policies = getPolicies();
 const heroImage = getMediaAssetById("media-brand-hero-sea");
 ---

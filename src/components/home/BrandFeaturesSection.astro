@@ -1,5 +1,6 @@
 ---
 import type { PolicyContent, SiteProfileContent } from "../../content/types";
+import { ELEVATOR_FACILITY_COPY } from "../../content/data/facilities";
 import SectionHeading from "../ui/SectionHeading.astro";
 
 interface FeatureItem {
@@ -26,6 +27,10 @@ const features: FeatureItem[] = [
   {
     title: "同行方式更彈性",
     copy: policies.find((policy) => policy.type === "private-stay")?.content ?? "多人同行或包棟需求，歡迎提前電話詢問，我們會依房況與人數協助確認合適安排。",
+  },
+  {
+    title: "行李移動更方便",
+    copy: ELEVATOR_FACILITY_COPY.short,
   },
 ];
 ---
@@ -88,7 +93,7 @@ const features: FeatureItem[] = [
 
   @media (min-width: 768px) {
     .feature-grid {
-      grid-template-columns: repeat(3, minmax(0, 1fr));
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
     }
   }
 </style>
