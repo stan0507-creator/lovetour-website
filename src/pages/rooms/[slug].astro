@@ -17,6 +17,9 @@ export async function getStaticPaths() {
 const { room } = Astro.props;
 const image = room.photos[0];
 const extraBedNotice = "所有房型皆可提前詢問加床，實際可加床數量、費用及安排方式，依房型與入住當日狀況確認。";
+const hasFeatureHighlights = Array.isArray(room.featureHighlights) && room.featureHighlights.length > 0;
+const roomDescription = typeof room.description === "string" ? room.description.trim() : "";
+const hasDescription = roomDescription.length > 0;
 ---
 
 <MainLayout title={`${room.name}｜樂圖漫遊會館`} description={room.summary} canonicalPath={`/rooms/${room.slug}`} ogImageId={image?.id}>
@@ -51,9 +54,15 @@ const extraBedNotice = "所有房型皆可提前詢問加床，實際可加床�
         <article class="detail-panel">
           <p class="eyebrow">Highlights</p>
           <h2>房型特色</h2>
-          <ul>
-            {room.featureHighlights.map((feature) => <li>{feature}</li>)}
-          </ul>
+          {
+            hasFeatureHighlights ? (
+              <ul>
+                {room.featureHighlights.map((feature) => <li>{feature}</li>)}
+              </ul>
+            ) : hasDescription ? (
+              <p class="highlight-description">{roomDescription}</p>
+            ) : null
+          }
         </article>
 
         <article class="detail-panel">
@@ -132,6 +141,11 @@ const extraBedNotice = "所有房型皆可提前詢問加床，實際可加床�
 
   .notice-text {
     margin: 0 0 var(--space-4);
+    color: var(--color-text-secondary);
+  }
+
+  .highlight-description {
+    margin: 0;
     color: var(--color-text-secondary);
   }
 
