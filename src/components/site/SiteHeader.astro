@@ -25,7 +25,7 @@ const isActive = (href: string) => href === "/" ? currentPath === "/" : currentP
 
 <header class="site-header">
   <a class="brand" href="/" aria-label="樂圖漫遊會館首頁" aria-current={currentPath === "/" ? "page" : undefined}>
-    <span class="brand-mark">LT</span>
+    <img class="brand-logo" src="/images/brand/lovetour-logo.webp" alt="樂圖漫遊會館 Logo" width="360" height="254" decoding="async" />
     <span>
       <strong>{profile.name}</strong>
       <small>{profile.tagline}</small>
@@ -71,16 +71,14 @@ const isActive = (href: string) => href === "/" ? currentPath === "/" : currentP
     gap: var(--space-3);
   }
 
-  .brand-mark {
-    display: grid;
-    width: 2.75rem;
-    height: 2.75rem;
+  .brand-logo {
+    display: block;
+    width: clamp(3.5rem, 8vw, 5.25rem);
+    height: auto;
+    max-height: 3.25rem;
     flex: 0 0 auto;
-    place-items: center;
-    border: 1px solid var(--color-primary);
-    border-radius: var(--radius-pill);
-    color: var(--color-primary);
-    font-weight: var(--font-weight-black);
+    border-radius: var(--radius-sm);
+    object-fit: contain;
   }
 
   .brand strong,
