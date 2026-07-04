@@ -8,10 +8,17 @@ interface Props {
 
 const { room } = Astro.props;
 const image = room.photos[0];
+const roomHref = `/rooms/${room.slug}`;
 ---
 
 <article class="room-card">
-  {image && <img src={image.src} alt={image.alt} />}
+  {
+    image && (
+      <a class="room-card-image-link" href={roomHref} aria-label={`查看${room.name}房型`}>
+        <img src={image.src} alt={image.alt} />
+      </a>
+    )
+  }
   <div class="room-card-body">
     <p class="room-meta">建議 {room.capacity.standard} 人｜{room.bedSetup}</p>
     <h2>{room.name}</h2>
@@ -20,7 +27,7 @@ const image = room.photos[0];
       {room.featureHighlights.slice(0, 3).map((feature) => <span>{feature}</span>)}
     </div>
     <div class="actions">
-      <CtaLink label="查看房型" href={`/rooms/${room.slug}`} variant="outline" tone="primary" size="sm" />
+      <CtaLink label="查看房型" href={roomHref} variant="outline" tone="primary" size="sm" />
       <CtaLink label="電話詢問" href="tel:+886905370600" tone="accent" size="sm" />
     </div>
   </div>
@@ -35,7 +42,14 @@ const image = room.photos[0];
     box-shadow: var(--shadow-sm);
   }
 
+  .room-card-image-link {
+    display: block;
+    color: inherit;
+    text-decoration: none;
+  }
+
   img {
+    display: block;
     width: 100%;
     aspect-ratio: 4 / 3;
     object-fit: cover;
