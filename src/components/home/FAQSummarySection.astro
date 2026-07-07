@@ -8,13 +8,14 @@ interface Props {
 
 const { faqs } = Astro.props;
 
-const getFaqCategoryLabel = (faq: FAQContent) => {
-  if (faq.id === "faq-transportation") {
-    return "Pick-up Service";
-  }
-
-  return faq.category;
+const faqCategoryLabels: Record<string, string> = {
+  "faq-check-in": "Check-in & Check-out",
+  "faq-transportation": "Pick-up Service",
+  "faq-extra-bed": "Extra Bed",
+  "faq-private-stay": "Private Group Stay",
 };
+
+const getFaqCategoryLabel = (faq: FAQContent) => faqCategoryLabels[faq.id] ?? faq.category;
 ---
 
 <section id="faq" class="section">
