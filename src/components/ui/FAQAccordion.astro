@@ -23,6 +23,11 @@ const categoryLabels: Record<string, string> = {
   weather: "天候與交通異常",
 };
 
+const faqCategoryLabels: Record<string, string> = {
+  "faq-check-in": "Check-in / Check-out",
+  "faq-transportation": "Pick-up Service",
+};
+
 const policyFaqs = policies.map((policy) => ({
   id: `policy-${policy.type}`,
   category: policy.type,
@@ -33,7 +38,7 @@ const policyFaqs = policies.map((policy) => ({
 
 const items = [...faqs, ...policyFaqs].sort((left, right) => (left.priority ?? 999) - (right.priority ?? 999));
 const grouped = items.reduce<Record<string, typeof items>>((result, item) => {
-  const category = categoryLabels[item.category ?? ""] ?? item.category ?? "其他";
+  const category = faqCategoryLabels[item.id] ?? categoryLabels[item.category ?? ""] ?? item.category ?? "其他";
   result[category] = result[category] ?? [];
   result[category].push(item);
   return result;

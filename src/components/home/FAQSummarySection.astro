@@ -7,6 +7,14 @@ interface Props {
 }
 
 const { faqs } = Astro.props;
+
+const getFaqCategoryLabel = (faq: FAQContent) => {
+  if (faq.id === "faq-transportation") {
+    return "Pick-up Service";
+  }
+
+  return faq.category;
+};
 ---
 
 <section id="faq" class="section">
@@ -19,7 +27,7 @@ const { faqs } = Astro.props;
     <div class="faq-list">
       {faqs.slice(0, 4).map((faq) => (
         <article class="faq-card">
-          <p>{faq.category}</p>
+          <p>{getFaqCategoryLabel(faq)}</p>
           <h3>{faq.question}</h3>
           <span>{faq.answer}</span>
         </article>
