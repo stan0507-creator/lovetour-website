@@ -14,10 +14,11 @@ const desktopMedia = profile.heroImages?.desktop ?? media;
 const mobileMedia = profile.heroImages?.mobile ?? profile.heroImages?.desktop ?? media;
 const desktopObjectPosition = desktopMedia?.objectPosition ?? "center";
 const mobileObjectPosition = mobileMedia?.objectPosition ?? desktopObjectPosition;
+const heroTitle = "我們打造的，不是房間，而是旅途中真正想回去休息的地方";
 
 const hero = {
   eyebrow: profile.tagline,
-  title: profile.description,
+  title: heroTitle,
   summary:
     "在澎湖的海風裡，把白天交給旅行，把夜晚交給好好休息。樂圖漫遊會館重視寬敞、整潔與睡眠舒適度，也用親切且彈性的服務陪旅客把行程安排得更順。",
   mediaAssetId: media?.id,
@@ -102,11 +103,11 @@ const hero = {
   h1 {
     max-width: 920px;
     margin: 0 0 var(--space-5);
-    font-family: "Kaiti TC", "STKaiti", "BiauKai", "KaiTi", serif;
+    font-family: "HanziPen TC", "Hannotate TC", "Kaiti TC", "STKaiti", "BiauKai", "KaiTi", cursive, serif;
     font-size: clamp(2.6rem, 8vw, 6.25rem);
-    font-weight: var(--font-weight-semibold);
+    font-weight: 400;
     line-height: 0.98;
-    letter-spacing: var(--letter-spacing-normal);
+    letter-spacing: 0.04em;
     text-wrap: balance;
   }
 
