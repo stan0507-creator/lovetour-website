@@ -23,9 +23,10 @@ const nearbyPlaces = getNearbyPlaces();
 const heroMedia = getMediaAssetById("media-brand-hero-sea");
 const villaRental = getVillaRentalContent();
 const privateStayImage = getMediaAssetById("media-room-private-stay");
+const homeSeoDescription = "我們打造的，不是房間，而是旅途中真正想回去休息的地方";
 ---
 
-<MainLayout title={`${profile.name}｜澎湖民宿`} description={profile.description} canonicalPath="/" ogImageId="media-brand-hero-sea">
+<MainLayout title={`${profile.name}｜澎湖民宿`} description={homeSeoDescription} canonicalPath="/" ogImageId="media-brand-hero-sea">
   <main>
     <HeroSection profile={profile} media={heroMedia} />
     <BrandFeaturesSection profile={profile} policies={policies} />
