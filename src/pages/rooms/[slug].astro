@@ -1,6 +1,7 @@
 ---
 import CTASection from "../../components/ui/CTASection.astro";
 import PageHero from "../../components/ui/PageHero.astro";
+import RoomGallery from "../../components/ui/RoomGallery.astro";
 import { getContentSnapshotFromSource } from "../../content";
 import { OWLNEST_BOOKING_URL, ROOM_RATE_NOTICE } from "../../content/data/booking";
 import MainLayout from "../../layouts/MainLayout.astro";
@@ -25,6 +26,8 @@ const hasDescription = roomDescription.length > 0;
 <MainLayout title={`${room.name}｜樂圖漫遊會館`} description={room.summary} canonicalPath={`/rooms/${room.slug}`} ogImageId={image?.id}>
   <main>
     <PageHero eyebrow="Room" title={room.name} copy={room.description ?? room.summary} image={image} breadcrumbs={[{ label: "房型列表", href: "/rooms" }, { label: room.name }]} />
+
+    <RoomGallery roomName={room.name} photos={room.photos} />
 
     <section class="section">
       <div class="container room-detail-grid">

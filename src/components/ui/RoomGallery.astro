@@ -1,0 +1,377 @@
+---
+import type { MediaAsset } from "../../domain/models";
+
+interface Props {
+  roomName: string;
+  photos: MediaAsset[];
+}
+
+const { roomName, photos } = Astro.props;
+const galleryPhotos = photos.filter((photo) => Boolean(photo?.src));
+const hasGallery = galleryPhotos.length > 1;
+const optimizedSanityImage = (src: string, width: number): string => {
+  if (!src.includes("cdn.sanity.io/images/")) {
+    return src;
+  }
+
+  const url = new URL(src);
+  url.searchParams.set("w", String(width));
+  url.searchParams.set("fit", "max");
+  url.searchParams.set("auto", "format");
+  url.searchParams.set("q", "84");
+  return url.toString();
+};
+const galleryItems = galleryPhotos.map((photo) => ({
+  alt: photo.alt,
+  thumbnailSrc: optimizedSanityImage(photo.src, 360),
+  displaySrc: optimizedSanityImage(photo.src, 1400),
+  fullSrc: optimizedSanityImage(photo.src, 2000),
+}));
+---
+
+{
+  hasGallery && (
+    <section class="section room-gallery-section" aria-labelledby="room-gallery-title">
+      <div class="container">
+        <div class="room-gallery-heading">
+          <div>
+            <p class="eyebrow">Gallery</p>
+            <h2 id="room-gallery-title">房型相簿</h2>
+          </div>
+          <p class="room-gallery-count">共 {galleryItems.length} 張照片</p>
+        </div>
+
+        <div class="room-gallery" data-room-gallery>
+          <button
+            class="room-gallery-main"
+            type="button"
+            aria-label={`放大查看${roomName}照片`}
+            title="放大照片"
+            data-gallery-main
+          >
+            <img
+              src={galleryItems[0].displaySrc}
+              alt={galleryItems[0].alt}
+              data-gallery-main-image
+            />
+          </button>
+
+          <div class="room-gallery-thumbnails" aria-label={`${roomName}照片選擇`}>
+            {galleryItems.map((photo, index) => (
+              <button
+                class:list={["room-gallery-thumbnail", index === 0 && "is-active"]}
+                type="button"
+                aria-label={`查看第 ${index + 1} 張：${photo.alt}`}
+                aria-pressed={index === 0 ? "true" : "false"}
+                data-gallery-thumbnail
+                data-gallery-index={index}
+                data-display-src={photo.displaySrc}
+                data-full-src={photo.fullSrc}
+                data-alt={photo.alt}
+              >
+                <img src={photo.thumbnailSrc} alt="" loading="lazy" />
+              </button>
+            ))}
+          </div>
+
+          <dialog class="room-gallery-dialog" aria-label={`${roomName}房型相簿`} data-gallery-dialog>
+            <form method="dialog">
+              <button class="gallery-icon-button gallery-close" type="submit" aria-label="關閉相簿" title="關閉">
+                <span aria-hidden="true">×</span>
+              </button>
+            </form>
+            <button class="gallery-icon-button gallery-previous" type="button" aria-label="上一張照片" title="上一張" data-gallery-previous>
+              <span aria-hidden="true">←</span>
+            </button>
+            <figure>
+              <img src={galleryItems[0].fullSrc} alt={galleryItems[0].alt} data-gallery-dialog-image />
+              <figcaption>
+                <span data-gallery-caption>{galleryItems[0].alt}</span>
+                <span data-gallery-counter>1 / {galleryItems.length}</span>
+              </figcaption>
+            </figure>
+            <button class="gallery-icon-button gallery-next" type="button" aria-label="下一張照片" title="下一張" data-gallery-next>
+              <span aria-hidden="true">→</span>
+            </button>
+          </dialog>
+        </div>
+      </div>
+    </section>
+  )
+}
+
+<style>
+  .room-gallery-section {
+    background: var(--color-surface-muted);
+  }
+
+  .room-gallery-heading {
+    display: flex;
+    gap: var(--space-4);
+    align-items: end;
+    justify-content: space-between;
+    margin-bottom: var(--space-8);
+  }
+
+  .room-gallery-heading h2,
+  .room-gallery-heading p {
+    margin-bottom: 0;
+  }
+
+  .room-gallery-count {
+    color: var(--color-text-secondary);
+    font-size: var(--font-size-sm);
+  }
+
+  .room-gallery {
+    display: grid;
+    gap: var(--space-4);
+  }
+
+  .room-gallery-main,
+  .room-gallery-thumbnail {
+    overflow: hidden;
+    padding: 0;
+    border: 0;
+    background: transparent;
+    cursor: pointer;
+  }
+
+  .room-gallery-main {
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    border-radius: var(--radius-lg);
+    background: var(--color-secondary);
+    box-shadow: var(--shadow-md);
+    cursor: zoom-in;
+  }
+
+  .room-gallery-main img,
+  .room-gallery-thumbnail img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .room-gallery-thumbnails {
+    display: grid;
+    grid-auto-columns: minmax(112px, 34vw);
+    grid-auto-flow: column;
+    gap: var(--space-3);
+    overflow-x: auto;
+    padding: var(--space-1);
+    scroll-snap-type: x mandatory;
+  }
+
+  .room-gallery-thumbnail {
+    aspect-ratio: 4 / 3;
+    border: 2px solid transparent;
+    border-radius: var(--radius-md);
+    opacity: 0.72;
+    scroll-snap-align: start;
+    transition:
+      border-color 160ms ease,
+      opacity 160ms ease;
+  }
+
+  .room-gallery-thumbnail:hover,
+  .room-gallery-thumbnail.is-active {
+    border-color: var(--color-primary);
+    opacity: 1;
+  }
+
+  .room-gallery-dialog {
+    width: min(1120px, calc(100% - var(--space-6)));
+    max-width: none;
+    max-height: calc(100dvh - var(--space-6));
+    padding: 0;
+    border: 0;
+    border-radius: var(--radius-lg);
+    color: var(--color-surface);
+    background: #0d1321;
+    box-shadow: var(--shadow-lg);
+  }
+
+  .room-gallery-dialog::backdrop {
+    background: rgba(8, 13, 24, 0.84);
+    backdrop-filter: blur(6px);
+  }
+
+  .room-gallery-dialog figure {
+    display: grid;
+    min-height: min(72dvh, 760px);
+    margin: 0;
+    grid-template-rows: minmax(0, 1fr) auto;
+  }
+
+  .room-gallery-dialog figure img {
+    width: 100%;
+    height: 100%;
+    max-height: calc(100dvh - 9rem);
+    object-fit: contain;
+  }
+
+  .room-gallery-dialog figcaption {
+    display: flex;
+    gap: var(--space-4);
+    justify-content: space-between;
+    padding: var(--space-4) var(--space-12) var(--space-4) var(--space-5);
+    color: color-mix(in srgb, var(--color-surface) 84%, transparent);
+    font-size: var(--font-size-sm);
+  }
+
+  .gallery-icon-button {
+    position: absolute;
+    z-index: 2;
+    display: grid;
+    width: 44px;
+    height: 44px;
+    padding: 0;
+    border: 1px solid rgba(255, 255, 255, 0.26);
+    border-radius: 50%;
+    place-items: center;
+    color: var(--color-surface);
+    font-size: 1.5rem;
+    line-height: 1;
+    background: rgba(13, 19, 33, 0.78);
+    cursor: pointer;
+  }
+
+  .gallery-close {
+    top: var(--space-3);
+    right: var(--space-3);
+  }
+
+  .gallery-previous,
+  .gallery-next {
+    top: 50%;
+    transform: translateY(-50%);
+  }
+
+  .gallery-previous {
+    left: var(--space-3);
+  }
+
+  .gallery-next {
+    right: var(--space-3);
+  }
+
+  @media (min-width: 820px) {
+    .room-gallery-thumbnails {
+      grid-auto-flow: row;
+      grid-template-columns: repeat(5, minmax(0, 1fr));
+      overflow: visible;
+    }
+  }
+
+  @media (max-width: 520px) {
+    .room-gallery-heading {
+      align-items: start;
+      flex-direction: column;
+    }
+
+    .room-gallery-main {
+      aspect-ratio: 4 / 3;
+    }
+
+    .room-gallery-dialog {
+      width: calc(100% - var(--space-4));
+      max-height: calc(100dvh - var(--space-4));
+    }
+
+    .room-gallery-dialog figure {
+      min-height: 0;
+    }
+
+    .room-gallery-dialog figure img {
+      height: auto;
+      max-height: calc(100dvh - 9rem);
+    }
+
+    .room-gallery-dialog figcaption {
+      align-items: start;
+      flex-direction: column;
+      padding-right: var(--space-5);
+    }
+  }
+</style>
+
+<script>
+  document.querySelectorAll<HTMLElement>("[data-room-gallery]").forEach((gallery) => {
+    const mainButton = gallery.querySelector<HTMLButtonElement>("[data-gallery-main]");
+    const mainImage = gallery.querySelector<HTMLImageElement>("[data-gallery-main-image]");
+    const dialog = gallery.querySelector<HTMLDialogElement>("[data-gallery-dialog]");
+    const dialogImage = gallery.querySelector<HTMLImageElement>("[data-gallery-dialog-image]");
+    const caption = gallery.querySelector<HTMLElement>("[data-gallery-caption]");
+    const counter = gallery.querySelector<HTMLElement>("[data-gallery-counter]");
+    const previousButton = gallery.querySelector<HTMLButtonElement>("[data-gallery-previous]");
+    const nextButton = gallery.querySelector<HTMLButtonElement>("[data-gallery-next]");
+    const thumbnails = Array.from(
+      gallery.querySelectorAll<HTMLButtonElement>("[data-gallery-thumbnail]"),
+    );
+
+    if (
+      !mainButton ||
+      !mainImage ||
+      !dialog ||
+      !dialogImage ||
+      !caption ||
+      !counter ||
+      !previousButton ||
+      !nextButton ||
+      thumbnails.length === 0
+    ) {
+      return;
+    }
+
+    let currentIndex = 0;
+
+    const selectPhoto = (index: number) => {
+      currentIndex = (index + thumbnails.length) % thumbnails.length;
+      const selected = thumbnails[currentIndex];
+      const displaySrc = selected.dataset.displaySrc;
+      const fullSrc = selected.dataset.fullSrc;
+      const alt = selected.dataset.alt || "房型照片";
+
+      if (!displaySrc || !fullSrc) {
+        return;
+      }
+
+      mainImage.src = displaySrc;
+      mainImage.alt = alt;
+      dialogImage.src = fullSrc;
+      dialogImage.alt = alt;
+      caption.textContent = alt;
+      counter.textContent = `${currentIndex + 1} / ${thumbnails.length}`;
+
+      thumbnails.forEach((thumbnail, thumbnailIndex) => {
+        const isActive = thumbnailIndex === currentIndex;
+        thumbnail.classList.toggle("is-active", isActive);
+        thumbnail.setAttribute("aria-pressed", String(isActive));
+      });
+    };
+
+    thumbnails.forEach((thumbnail, index) => {
+      thumbnail.addEventListener("click", () => selectPhoto(index));
+    });
+
+    mainButton.addEventListener("click", () => {
+      selectPhoto(currentIndex);
+      dialog.showModal();
+    });
+
+    previousButton.addEventListener("click", () => selectPhoto(currentIndex - 1));
+    nextButton.addEventListener("click", () => selectPhoto(currentIndex + 1));
+
+    dialog.addEventListener("keydown", (event) => {
+      if (event.key === "ArrowLeft") {
+        selectPhoto(currentIndex - 1);
+      }
+
+      if (event.key === "ArrowRight") {
+        selectPhoto(currentIndex + 1);
+      }
+    });
+  });
+</script>
