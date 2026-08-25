@@ -21,7 +21,11 @@ const recommendedRooms = rooms.slice(0, 3);
     <div class="room-grid">
       {recommendedRooms.map((room) => (
         <article class="room-card">
-          {room.photos[0] && <img src={room.photos[0].src} alt={room.photos[0].alt} />}
+          {room.photos[0] && (
+            <a class="room-card-image-link" href={`/rooms/${room.slug}`} aria-label={`查看${room.name}房型`}>
+              <img src={room.photos[0].src} alt={room.photos[0].alt} />
+            </a>
+          )}
           <div class="room-body">
             <p class="room-meta">建議 {room.capacity.standard} 人｜{room.bedSetup}</p>
             <h3>{room.name}</h3>
@@ -53,7 +57,12 @@ const recommendedRooms = rooms.slice(0, 3);
     box-shadow: var(--shadow-sm);
   }
 
-  img {
+  .room-card-image-link {
+    display: block;
+  }
+
+  .room-card-image-link img {
+    display: block;
     width: 100%;
     aspect-ratio: 4 / 3;
     object-fit: cover;
