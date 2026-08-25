@@ -1,0 +1,225 @@
+.national-subsidy-announcement {
+  --announcement-bg: #082f52;
+  --announcement-fg: #fff7e4;
+  --announcement-accent: #f0c66c;
+
+  position: relative;
+  z-index: 20;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 0.4rem 0.7rem;
+  width: 100%;
+  min-height: 42px;
+  padding: 0.58rem max(1rem, env(safe-area-inset-right)) 0.58rem max(1rem, env(safe-area-inset-left));
+  color: var(--announcement-fg);
+  background: var(--announcement-bg);
+  font-size: 0.95rem;
+  font-weight: 700;
+  line-height: 1.35;
+  text-align: center;
+  text-decoration: none;
+  box-sizing: border-box;
+}
+
+.national-subsidy-announcement--starrywhale {
+  --announcement-bg: #071d3c;
+  --announcement-fg: #e9f8ff;
+  --announcement-accent: #f7d869;
+}
+
+.national-subsidy-announcement:hover {
+  color: var(--announcement-fg);
+  background: color-mix(in srgb, var(--announcement-bg) 90%, #000 10%);
+}
+
+.national-subsidy-announcement:focus-visible,
+.national-subsidy-badge:focus-visible {
+  outline: 3px solid var(--announcement-accent, #f0c66c);
+  outline-offset: 3px;
+}
+
+.national-subsidy-announcement__lead {
+  color: var(--announcement-accent);
+}
+
+.national-subsidy-announcement__divider {
+  width: 1px;
+  height: 1em;
+  background: currentColor;
+  opacity: 0.32;
+}
+
+.national-subsidy-badge {
+  display: inline-block;
+  width: 180px;
+  aspect-ratio: 1;
+  line-height: 0;
+  text-decoration: none;
+  border-radius: 999px;
+  transform: translateZ(0);
+}
+
+.national-subsidy-badge--hero {
+  width: clamp(180px, 16vw, 220px);
+}
+
+.national-subsidy-badge--inline {
+  width: 96px;
+}
+
+.national-subsidy-badge__image {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.national-subsidy-hero-placement {
+  position: absolute;
+  inset-block-start: var(--national-subsidy-hero-top, 1.25rem);
+  inset-inline-end: var(--national-subsidy-hero-right, max(1rem, env(safe-area-inset-right)));
+  z-index: 4;
+}
+
+.national-subsidy-room-tag {
+  --tag-bg: #fff7e4;
+  --tag-fg: #082f52;
+  --tag-border: rgba(240, 198, 108, 0.9);
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.32rem;
+  min-height: 28px;
+  padding: 0 0.68rem;
+  color: var(--tag-fg);
+  background: var(--tag-bg);
+  border: 1px solid var(--tag-border);
+  border-radius: 999px;
+  font-size: 0.85rem;
+  font-weight: 800;
+  line-height: 1;
+  white-space: nowrap;
+  box-sizing: border-box;
+}
+
+.national-subsidy-room-tag--starrywhale {
+  --tag-bg: #e9f8ff;
+  --tag-fg: #071d3c;
+  --tag-border: rgba(120, 216, 255, 0.9);
+}
+
+.national-subsidy-room-tag__icon {
+  width: 1em;
+  height: 1em;
+  flex: 0 0 auto;
+}
+
+.national-subsidy-info {
+  --info-bg: #fffaf0;
+  --info-fg: #102b3f;
+  --info-accent: #a87924;
+  --info-border: rgba(8, 47, 82, 0.14);
+
+  scroll-margin-top: 88px;
+  padding: 44px max(1rem, env(safe-area-inset-right)) 48px max(1rem, env(safe-area-inset-left));
+  color: var(--info-fg);
+  background: var(--info-bg);
+  border-block-start: 1px solid var(--info-border);
+  border-block-end: 1px solid var(--info-border);
+  box-sizing: border-box;
+}
+
+.national-subsidy-info--starrywhale {
+  --info-bg: #f2fbff;
+  --info-fg: #071d3c;
+  --info-accent: #1b7ca8;
+  --info-border: rgba(7, 29, 60, 0.14);
+}
+
+.national-subsidy-info__inner {
+  display: grid;
+  grid-template-columns: minmax(0, 0.82fr) minmax(280px, 1.18fr);
+  gap: 2rem;
+  align-items: start;
+  max-width: 1080px;
+  margin: 0 auto;
+}
+
+.national-subsidy-info__eyebrow {
+  margin: 0 0 0.45rem;
+  color: var(--info-accent);
+  font-size: 0.88rem;
+  font-weight: 900;
+  line-height: 1.4;
+}
+
+.national-subsidy-info h2 {
+  margin: 0;
+  color: inherit;
+  font-size: 1.85rem;
+  font-weight: 900;
+  line-height: 1.2;
+  letter-spacing: 0;
+}
+
+.national-subsidy-info__content {
+  font-size: 1rem;
+  line-height: 1.8;
+}
+
+.national-subsidy-info__content p {
+  margin: 0 0 0.85rem;
+}
+
+.national-subsidy-info__content ul {
+  display: grid;
+  gap: 0.55rem;
+  margin: 0;
+  padding-inline-start: 1.2rem;
+}
+
+@media (max-width: 720px) {
+  .national-subsidy-announcement {
+    display: grid;
+    grid-template-columns: 1fr;
+    justify-content: stretch;
+    gap: 0.16rem;
+    min-height: 46px;
+    padding-inline: max(0.85rem, env(safe-area-inset-left));
+    font-size: 0.82rem;
+    text-align: left;
+  }
+
+  .national-subsidy-announcement > span {
+    min-width: 0;
+  }
+
+  .national-subsidy-announcement__divider {
+    display: none;
+  }
+
+  .national-subsidy-badge--hero {
+    width: clamp(96px, 28vw, 120px);
+  }
+
+  .national-subsidy-hero-placement {
+    inset-block-start: var(--national-subsidy-hero-top-mobile, 0.75rem);
+    inset-inline-end: var(--national-subsidy-hero-right-mobile, max(0.75rem, env(safe-area-inset-right)));
+  }
+
+  .national-subsidy-info {
+    scroll-margin-top: 72px;
+    padding-block: 34px 38px;
+  }
+
+  .national-subsidy-info__inner {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+
+  .national-subsidy-info h2 {
+    font-size: 1.5rem;
+  }
+}

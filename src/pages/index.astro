@@ -3,6 +3,7 @@ import BrandFeaturesSection from "../components/home/BrandFeaturesSection.astro"
 import ContactSummarySection from "../components/home/ContactSummarySection.astro";
 import FAQSummarySection from "../components/home/FAQSummarySection.astro";
 import HeroSection from "../components/home/HeroSection.astro";
+import NationalTravelSubsidyInfo from "../components/NationalTravelSubsidyInfo.astro";
 import PrivateStaySection from "../components/home/PrivateStaySection.astro";
 import RoomRecommendationsSection from "../components/home/RoomRecommendationsSection.astro";
 import {
@@ -29,6 +30,7 @@ const homeSeoDescription = "我們打造的不是房間，而是旅途中真正�
 <MainLayout title={`${profile.name}｜澎湖民宿`} description={homeSeoDescription} canonicalPath="/" ogImageId="media-brand-hero-sea">
   <main>
     <HeroSection profile={profile} media={heroMedia} />
+    <NationalTravelSubsidyInfo variant="lovetour" />
     <BrandFeaturesSection profile={profile} policies={policies} />
     <RoomRecommendationsSection rooms={rooms} />
     {villaRental && <PrivateStaySection content={villaRental} image={privateStayImage} />}

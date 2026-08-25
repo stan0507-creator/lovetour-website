@@ -1,0 +1,31 @@
+---
+import "../styles/national-travel-subsidy.css";
+
+interface Props {
+  href?: string;
+  variant?: "lovetour" | "starrywhale";
+  class?: string;
+}
+
+const {
+  href = "#national-travel-subsidy",
+  variant = "lovetour",
+  class: className = "",
+} = Astro.props;
+---
+
+<a
+  href={href}
+  class:list={[
+    "national-subsidy-announcement",
+    `national-subsidy-announcement--${variant}`,
+    className,
+  ]}
+  aria-label="查看 2026 國旅補助說明"
+>
+  <span class="national-subsidy-announcement__lead">2026 國旅補助 9/1 開跑</span>
+  <span class="national-subsidy-announcement__divider" aria-hidden="true"></span>
+  <span>澎湖離島平日住宿最高折抵 $2,500</span>
+  <span class="national-subsidy-announcement__divider" aria-hidden="true"></span>
+  <span>入住前請先完成登錄</span>
+</a>

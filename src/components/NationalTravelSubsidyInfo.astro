@@ -1,0 +1,40 @@
+---
+import "../styles/national-travel-subsidy.css";
+
+interface Props {
+  id?: string;
+  variant?: "lovetour" | "starrywhale";
+  class?: string;
+}
+
+const {
+  id = "national-travel-subsidy",
+  variant = "lovetour",
+  class: className = "",
+} = Astro.props;
+---
+
+<section
+  id={id}
+  class:list={[
+    "national-subsidy-info",
+    `national-subsidy-info--${variant}`,
+    className,
+  ]}
+  aria-labelledby={`${id}-title`}
+>
+  <div class="national-subsidy-info__inner">
+    <div class="national-subsidy-info__heading">
+      <p class="national-subsidy-info__eyebrow">平日住宿獎助活動</p>
+      <h2 id={`${id}-title`}>國旅補助說明</h2>
+    </div>
+    <div class="national-subsidy-info__content">
+      <p>本館參與 2026 平日住宿獎助活動，符合資格旅客可於活動期間依規定使用住宿折抵。</p>
+      <ul>
+        <li>適用期間：9/1–11/30，週日–週四適用（不含國定假日及其連續假期）。</li>
+        <li>澎湖離島連續住宿兩晚合計最高折抵 $2,500，實際折抵依活動規定、旅客資格及剩餘補助額度為準。</li>
+        <li>入住前請先完成登錄；完成登錄不代表保證取得折抵，入住時請依規定提供本人證件供旅宿核對。</li>
+      </ul>
+    </div>
+  </div>
+</section>

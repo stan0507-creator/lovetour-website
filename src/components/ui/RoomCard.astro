@@ -1,5 +1,6 @@
 ---
 import type { RoomPageContent } from "../../content/types";
+import NationalTravelSubsidyTag from "../NationalTravelSubsidyTag.astro";
 import CtaLink from "./CtaLink.astro";
 
 interface Props {
@@ -20,7 +21,10 @@ const roomHref = `/rooms/${room.slug}`;
     )
   }
   <div class="room-card-body">
-    <p class="room-meta">建議 {room.capacity.standard} 人｜{room.bedSetup}</p>
+    <div class="room-card-heading-row">
+      <p class="room-meta">建議 {room.capacity.standard} 人｜{room.bedSetup}</p>
+      <NationalTravelSubsidyTag variant="lovetour" />
+    </div>
     <h2>{room.name}</h2>
     <p>{room.summary}</p>
     <div class="chips">
@@ -65,6 +69,14 @@ const roomHref = `/rooms/${room.slug}`;
     color: var(--color-primary);
     font-size: var(--font-size-sm);
     font-weight: var(--font-weight-black);
+  }
+
+  .room-card-heading-row {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-2);
   }
 
   h2 {

@@ -1,0 +1,45 @@
+---
+import "../styles/national-travel-subsidy.css";
+
+interface Props {
+  variant?: "lovetour" | "starrywhale";
+  size?: "hero" | "inline";
+  href?: string;
+  assetBase?: string;
+  class?: string;
+}
+
+const {
+  variant = "lovetour",
+  size = "hero",
+  href = "#national-travel-subsidy",
+  assetBase = "/assets",
+  class: className = "",
+} = Astro.props;
+
+const normalizedAssetBase = assetBase.replace(/\/$/, "");
+const fileName =
+  variant === "starrywhale"
+    ? "starrywhale-2026-subsidy-badge.svg"
+    : "lovetour-2026-subsidy-badge.svg";
+const label = "2026 國旅補助平日住宿獎助配合旅宿徽章";
+---
+
+<a
+  href={href}
+  class:list={[
+    "national-subsidy-badge",
+    `national-subsidy-badge--${size}`,
+    `national-subsidy-badge--${variant}`,
+    className,
+  ]}
+  aria-label="前往國旅補助說明"
+>
+  <img
+    src={`${normalizedAssetBase}/${fileName}`}
+    alt={label}
+    class="national-subsidy-badge__image"
+    loading="eager"
+    decoding="async"
+  />
+</a>

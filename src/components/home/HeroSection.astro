@@ -2,6 +2,7 @@
 import type { MediaAssetContent, SiteProfileContent } from "../../content/types";
 import { OWLNEST_BOOKING_URL } from "../../content/data/booking";
 import type { HeroContract } from "../../design-system/components";
+import NationalTravelSubsidyBadge from "../NationalTravelSubsidyBadge.astro";
 import CtaLink from "../ui/CtaLink.astro";
 
 interface Props {
@@ -45,6 +46,11 @@ const hero = {
     )
   }
   <div class="hero-scrim"></div>
+  <NationalTravelSubsidyBadge
+    variant="lovetour"
+    href="#national-travel-subsidy"
+    class="national-subsidy-hero-placement"
+  />
   <div class="container hero-content">
     <p class="eyebrow">{hero.eyebrow}</p>
     <h1 id="hero-title">{hero.title}</h1>
@@ -96,6 +102,11 @@ const hero = {
     padding-block: clamp(var(--space-16), 11vw, var(--space-24));
   }
 
+  .hero :global(.national-subsidy-hero-placement) {
+    inset-inline-start: auto;
+    inset-inline-end: var(--space-5);
+  }
+
   .hero :global(.eyebrow) {
     color: color-mix(in srgb, var(--color-accent) 70%, white);
   }
@@ -133,6 +144,13 @@ const hero = {
 
     .hero-image {
       object-position: var(--hero-position-mobile, center);
+    }
+
+    .hero :global(.national-subsidy-hero-placement) {
+      width: 104px;
+      inset-block-start: var(--space-4);
+      inset-inline-start: auto;
+      inset-inline-end: var(--space-4);
     }
 
     .hero-actions :global(.cta-link) {

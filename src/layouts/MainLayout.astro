@@ -1,6 +1,7 @@
 ---
 import "../styles/global.css";
 import { getMediaAssetById, getSiteProfile, isDraftContentMode } from "../content";
+import NationalTravelSubsidyAnnouncement from "../components/NationalTravelSubsidyAnnouncement.astro";
 import SiteFooter from "../components/site/SiteFooter.astro";
 import SiteHeader from "../components/site/SiteHeader.astro";
 
@@ -44,6 +45,7 @@ const ogImage = ogImageId ? getMediaAssetById(ogImageId) : getMediaAssetById("me
           內部草稿預覽：部分照片、連結及營運規則尚未確認，請勿公開使用。
         </div>
       )}
+      <NationalTravelSubsidyAnnouncement variant="lovetour" href="/#national-travel-subsidy" />
       <SiteHeader profile={profile} currentPath={Astro.url.pathname} />
       <slot />
       <SiteFooter profile={profile} currentPath={Astro.url.pathname} />
