@@ -37,6 +37,16 @@ const ogImage = ogImageId ? getMediaAssetById(ogImageId) : getMediaAssetById("me
     <meta property="og:site_name" content="樂圖漫遊會館" />
     <meta name="theme-color" content="#0f8b8d" />
     <title>{title}</title>
+    <!-- 國旅補助：活動於 2026/12/31 結束，台灣時間 2027/1/1 起自動隱藏公告列、徽章、說明區與房型標籤。
+         若活動再延長或提前截止，只要改下面這個日期。 -->
+    <script is:inline>
+      (function () {
+        var subsidyEndsAt = Date.parse("2027-01-01T00:00:00+08:00");
+        if (Date.now() >= subsidyEndsAt) {
+          document.documentElement.classList.add("subsidy-expired");
+        }
+      })();
+    </script>
   </head>
   <body>
     <div class="page-shell">

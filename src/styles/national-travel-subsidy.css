@@ -223,3 +223,11 @@
     font-size: 1.5rem;
   }
 }
+
+/* 活動結束後自動隱藏：<html> 的 subsidy-expired 由 MainLayout.astro 內的日期判斷加上。 */
+.subsidy-expired .national-subsidy-announcement,
+.subsidy-expired .national-subsidy-badge,
+.subsidy-expired .national-subsidy-info,
+.subsidy-expired .national-subsidy-room-tag {
+  display: none !important;
+}
